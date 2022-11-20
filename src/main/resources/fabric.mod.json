@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "pack_it_up",
+  "version": "${version}",
+  "name": "Pack It Up!",
+  "description":"Simple backpack mod that adds a customizable and modular backpack for carrying everything life throws at you!",
+  "icon": "assets/pack_it_up/icon.png",
+  "authors": [
+    "fzzyhmstrs"
+  ],
+  "entrypoints": {
+    "main": [
+        "fzzyhmstrs.pack_it_up.PIU"
+    ],
+    "client": [
+      "fzzyhmstrs.pack_it_up.PIUClient"
+    ],
+    "emi": [
+      "fzzyhmstrs.pack_it_up.compat.emi.EmiClientPlugin"
+    ]
+  },
+  "mixins": [
+    "pack_it_up.mixins.json"
+  ],
+  "license": "MIT License",
+  "depends": {
+    "minecraft": "1.19.x"
+  }
+}
