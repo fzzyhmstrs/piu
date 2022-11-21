@@ -11,6 +11,9 @@ import net.minecraft.util.registry.Registry;
 
 public class RegisterItem {
 
+    //basic items
+    public static final Item CLOTH = register("cloth",new Item(new Item.Settings().group(ItemGroup.MATERIALS)));
+
     //frames
     public static final Item BASIC_FRAME = register("basic_frame", new PackFrameItem(PackModuleItem.ModuleTier.IRON,1, new Item.Settings().group(ItemGroup.TRANSPORTATION)));
     public static final Item TALL_BASIC_FRAME = register("tall_basic_frame", new PackFrameItem(PackModuleItem.ModuleTier.IRON,2, new Item.Settings().group(ItemGroup.TRANSPORTATION)));
