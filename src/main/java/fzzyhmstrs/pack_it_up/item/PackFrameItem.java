@@ -4,27 +4,20 @@ import net.minecraft.item.Item;
 
 public class PackFrameItem extends Item {
 
-    public PackFrameItem(int mainModules, int sideModules, int bottomModules,Settings settings) {
+    public PackFrameItem(PackModuleItem.ModuleTier maxTier,int maxMainModules, Settings settings) {
         super(settings);
-        this.mainModules = mainModules;
-        this.sideModules = sideModules;
-        this.bottomModules = bottomModules;
+        this.maxTier = maxTier;
+        this.maxMainModules = maxMainModules;
     }
 
-    private final int mainModules, sideModules, bottomModules;
+    private final PackModuleItem.ModuleTier maxTier;
+    private final int maxMainModules;
 
+    public PackModuleItem.ModuleTier getMaxTier(){
+        return maxTier;
+    }
 
-
-    public int mainModulesSupported(){
-        return mainModules;
-    };
-
-    public int sideModulesSupported(){
-        return sideModules;
-    };
-
-    public int bottomModulesSupported(){
-        return bottomModules;
-    };
-
+    public int getMaxMainModules() {
+        return maxMainModules;
+    }
 }

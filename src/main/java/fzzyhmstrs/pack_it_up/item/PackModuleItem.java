@@ -14,16 +14,51 @@ public class PackModuleItem extends Item {
 
     private final ModuleSettings moduleSettings;
 
+    public boolean checkTier(ModuleTier chk){
+        return moduleSettings.tier.checkTier(chk);
+    }
 
+    public record ModuleSettings(ModuleTier tier, int maxStack, @Nullable Predicate<ItemStack> stackPredicate) {
 
-
-    public record ModuleSettings(int size, int width, int height, int maxStack, @Nullable Predicate<ItemStack> stackPredicate) {
-
-        public static ModuleSettings simple(int size, int dim){
-            return new ModuleSettings(size, dim, dim, 64, null);
+        public static ModuleSettings simple(ModuleTier tier){
+            return new ModuleSettings(tier, 64, null);
         }
-        public static ModuleSettings simple(int size, int width, int height){
-            return new ModuleSettings(size, width, height, 64, null);
+    }
+
+    public enum ModuleTier{
+        CLOTH(0,9,-1),
+        IRON(1, 18, -1),
+        TOOL(1,27,9),
+        GOLD(2,27,9),
+        DIAMOND(3,36,18),
+        BIG_TOOL(3,54,27),
+        ENDER(4,27,27),
+        NETHERITE(5,54,27);
+
+        private final int tier;
+        private final int slots;
+        private final int sideSlots;
+
+        ModuleTier(int tier, int slots, int sideSlots){
+            this.tier = tier;
+            this.slots = slots;
+            this.sideSlots = sideSlots;
+        }
+
+        public boolean suitableForSideSlot(){
+            return sideSlots > 0;
+        }
+
+        public boolean checkTier(ModuleTier chk){
+            return this.tier >= chk.tier;
+        }
+
+        public int getSlots(){
+            return slots;
+        }
+
+        public int getSideSlots(){
+            return sideSlots;
         }
     }
 }
