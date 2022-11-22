@@ -1,0 +1,11 @@
+{
+	"replace": false,
+	"values": [
+		"minecraft:diamond",
+		"minecraft:emerald",
+		"minecraft:amethyst_shard",
+		"minecraft:prismarine_crystals",
+		"minecraft:quartz",
+		"minecraft:lapis_lazuli"
+	]
+}

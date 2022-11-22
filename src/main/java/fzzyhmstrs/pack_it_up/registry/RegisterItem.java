@@ -2,10 +2,10 @@ package fzzyhmstrs.pack_it_up.registry;
 
 import fzzyhmstrs.pack_it_up.PIU;
 import fzzyhmstrs.pack_it_up.item.PackFrameItem;
+import fzzyhmstrs.pack_it_up.item.PackItem;
 import fzzyhmstrs.pack_it_up.item.PackModuleItem;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.item.*;
-import net.minecraft.tag.ItemTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -13,6 +13,7 @@ public class RegisterItem {
 
     //basic items
     public static final Item CLOTH = register("cloth",new Item(new Item.Settings().group(ItemGroup.MATERIALS)));
+    public static final Item PACK = register("pack",new PackItem(new Item.Settings().group(ItemGroup.TRANSPORTATION)));
 
     //frames
     public static final Item BASIC_FRAME = register("basic_frame", new PackFrameItem(PackModuleItem.ModuleTier.IRON,1, new Item.Settings().group(ItemGroup.TRANSPORTATION)));
@@ -53,9 +54,15 @@ public class RegisterItem {
 
     //netherite tier modules
     public static final Item LARGE_BAG = register("large_bag",new PackModuleItem(PackModuleItem.ModuleSettings.simple(PackModuleItem.ModuleTier.NETHERITE),new Item.Settings().group(ItemGroup.TRANSPORTATION)));
+    public static final Item LARGE_GARDENING_BAG = register("large_gardening_bag",new PackModuleItem(new PackModuleItem.ModuleSettings(PackModuleItem.ModuleTier.NETHERITE,256,(stack)-> stack.isIn(PIU.PLANT_ITEMS)),new Item.Settings().group(ItemGroup.TRANSPORTATION)));
+    public static final Item LARGE_FOOD_BAG = register("large_food_bag",new PackModuleItem(new PackModuleItem.ModuleSettings(PackModuleItem.ModuleTier.NETHERITE,256,(stack)-> stack.isIn(ConventionalItemTags.FOODS)),new Item.Settings().group(ItemGroup.TRANSPORTATION)));
+    public static final Item LARGE_BLOCK_BAG = register("large_block_bag",new PackModuleItem(new PackModuleItem.ModuleSettings(PackModuleItem.ModuleTier.NETHERITE,256,(stack)-> stack.getItem() instanceof BlockItem),new Item.Settings().group(ItemGroup.TRANSPORTATION)));
+    public static final Item LARGE_ORE_BAG = register("large_ore_bag",new PackModuleItem(new PackModuleItem.ModuleSettings(PackModuleItem.ModuleTier.NETHERITE,256,(stack)-> stack.isIn(ConventionalItemTags.ORES)),new Item.Settings().group(ItemGroup.TRANSPORTATION)));
+    public static final Item MAGIC_BAG = register("magic_bag",new PackModuleItem(new PackModuleItem.ModuleSettings(PackModuleItem.ModuleTier.NETHERITE,4, (stack)-> stack.getItem() instanceof EnchantedBookItem || stack.getItem() instanceof PotionItem),new Item.Settings().group(ItemGroup.TRANSPORTATION)));
 
     private static Item register(String path, Item item){
         return Registry.register(Registry.ITEM,new Identifier(PIU.MOD_ID,path),item);
     }
 
+    public static void init(){}
 }
