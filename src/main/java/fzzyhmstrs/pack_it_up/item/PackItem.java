@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
@@ -57,6 +58,22 @@ public class PackItem extends Item {
             map.put(SIDE_MODULE_ID,nbt.getString(SIDE_MODULE_ID));
         }
         return map;
+    }
+
+    public static void writeModules(Item f, Item m1, Item m2, Item sm, ItemStack pack){
+        NbtCompound nbt = pack.getOrCreateNbt();
+        if (f instanceof PackFrameItem) {
+            nbt.putString(FRAME_ID, Registry.ITEM.getId(f).toString());
+        }
+        if (m1 instanceof PackModuleItem) {
+            nbt.putString(MAIN_MODULE_ID, Registry.ITEM.getId(m1).toString());
+        }
+        if (m2 instanceof PackModuleItem) {
+            nbt.putString(MAIN_MODULE_2_ID, Registry.ITEM.getId(m2).toString());
+        }
+        if (sm instanceof PackModuleItem) {
+            nbt.putString(SIDE_MODULE_ID, Registry.ITEM.getId(sm).toString());
+        }
     }
 
 }

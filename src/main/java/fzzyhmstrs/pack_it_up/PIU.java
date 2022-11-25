@@ -2,6 +2,7 @@ package fzzyhmstrs.pack_it_up;
 
 
 import fzzyhmstrs.pack_it_up.registry.RegisterItem;
+import fzzyhmstrs.pack_it_up.screen.PackBenchScreenHandler;
 import fzzyhmstrs.pack_it_up.screen.PackScreenHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
@@ -25,6 +26,7 @@ public class PIU implements ModInitializer {
     public static TagKey<Item> SEEDS = TagKey.of(Registry.ITEM_KEY,new Identifier("c","seeds"));
 
     public static ScreenHandlerType<PackScreenHandler> PACK_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER,new Identifier(MOD_ID,"pack"),new ExtendedScreenHandlerType<>(PackScreenHandler::new));
+    public static ScreenHandlerType<PackBenchScreenHandler> PACK_BENCH_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER,new Identifier(MOD_ID,"pack_bench"),new ScreenHandlerType<>(PackBenchScreenHandler::new));
 
     @Override
     public void onInitialize() {

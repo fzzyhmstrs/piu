@@ -108,8 +108,7 @@ public class PackInventory implements Inventory {
         return inventory;
     }
 
-    public NbtCompound toNbt(){
-        NbtCompound nbtCompound = new NbtCompound();
+    public NbtCompound toNbt(NbtCompound nbtCompound){
         NbtList list = new NbtList();
         for (Map.Entry<String,Inventory> entry : modules.entrySet()){
             NbtCompound compound = new NbtCompound();
