@@ -17,10 +17,10 @@ public class PackItem extends Item {
         super(settings);
     }
 
-    private static final String FRAME_ID = "frame_id";
-    private static final String MAIN_MODULE_ID = "main_module_id";
-    private static final String MAIN_MODULE_2_ID = "main_module_2_id";
-    private static final String SIDE_MODULE_ID = "side_module_id";
+    public static final String FRAME_ID = "frame_id";
+    public static final String MAIN_MODULE_ID = "main_module_id";
+    public static final String MAIN_MODULE_2_ID = "main_module_2_id";
+    public static final String SIDE_MODULE_ID = "side_module_id";
     private static final String INVENTORY = "pack_inventory";
 
 
@@ -31,7 +31,7 @@ public class PackItem extends Item {
         NbtCompound nbt = stack.getNbt();
         if (nbt != null) {
             if (PackInventory.hasPackNbt(nbt)) {
-                PackInventory inventory = PackInventory.fromNbt(nbt);
+                PackInventory inventory = PackInventory.fromNbt(nbt, user);
                 Map<String,String> map = getModules(stack);
                 //open screen with inventory, stack, and map
                 return TypedActionResult.success(stack);

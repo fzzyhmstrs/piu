@@ -5,10 +5,10 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 
-public class PackBenchScreen extends HandledScreen<PackBenchScreenHandler> {
+public class PackScreen extends HandledScreen<PackScreenHandler> {
 
 
-    public PackBenchScreen(PackBenchScreenHandler handler, PlayerInventory inventory, Text title) {
+    public PackScreen(PackScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
     }
 

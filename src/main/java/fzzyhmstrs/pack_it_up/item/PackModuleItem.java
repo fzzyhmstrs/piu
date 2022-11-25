@@ -18,10 +18,25 @@ public class PackModuleItem extends Item {
         return moduleSettings.tier.checkTier(chk);
     }
 
-    public record ModuleSettings(ModuleTier tier, int maxStack, @Nullable Predicate<ItemStack> stackPredicate) {
+    public Predicate<ItemStack> getPredicate(){return moduleSettings.stackPredicate;}
+
+    public int getModuleCapacity(boolean side){
+        return side ? moduleSettings.tier.slots : moduleSettings.tier.sideSlots;
+    }
+
+    public int getMaxStackCount(){
+        return moduleSettings.maxStack;
+    }
+
+    public ModuleTier getTier(){return moduleSettings.tier;}
+
+    public record ModuleSettings(ModuleTier tier, int maxStack, Predicate<ItemStack> stackPredicate) {
+        public ModuleSettings(ModuleTier tier, int maxStack){
+            this(tier,maxStack,(stack)-> true);
+        }
 
         public static ModuleSettings simple(ModuleTier tier){
-            return new ModuleSettings(tier, 64, null);
+            return new ModuleSettings(tier, 64);
         }
     }
 

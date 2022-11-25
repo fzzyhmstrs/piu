@@ -1,6 +1,7 @@
 package fzzyhmstrs.pack_it_up.screen;
 
 import fzzyhmstrs.pack_it_up.item.PackInventory;
+import fzzyhmstrs.pack_it_up.item.PackItem;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,10 +14,11 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.Objects;
 
-public class PackBenchScreenHandlerFactory implements ExtendedScreenHandlerFactory {
+public class PackScreenHandlerFactory implements ExtendedScreenHandlerFactory {
 
-    public PackBenchScreenHandlerFactory(Map<String,String> map, ItemStack stack, PackInventory inventory){
+    public PackScreenHandlerFactory(Map<String,String> map, ItemStack stack, PackInventory inventory){
         this.map = map;
         this.stack = stack;
         this.size = inventory.size();
@@ -33,6 +35,7 @@ public class PackBenchScreenHandlerFactory implements ExtendedScreenHandlerFacto
         for (Map.Entry<String,String> entry : map.entrySet()){
             buf.writeString(entry.getKey());
             buf.writeString(entry.getValue());
+            buf.writeBoolean(!Objects.equals(entry.getKey(), PackItem.FRAME_ID));
         }
         buf.writeItemStack(stack);
         buf.writeByte(size);
@@ -46,6 +49,6 @@ public class PackBenchScreenHandlerFactory implements ExtendedScreenHandlerFacto
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new PackBenchScreenHandler(syncId,inv,map,stack,inventory, ScreenHandlerContext.create(player.world,player.getBlockPos()));
+        return new PackScreenHandler(syncId,inv,map,stack,inventory, ScreenHandlerContext.create(player.world,player.getBlockPos()));
     }
 }

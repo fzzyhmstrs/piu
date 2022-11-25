@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "pack_it_up:block/pack_bench",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "pack_it_up:block/pack_bench"
+    },
+    "facing=south": {
+      "model": "pack_it_up:block/pack_bench",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "pack_it_up:block/pack_bench",
+      "y": 270
+    }
+  }
+}
