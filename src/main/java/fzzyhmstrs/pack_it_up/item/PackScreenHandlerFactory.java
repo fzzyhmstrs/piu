@@ -1,0 +1,49 @@
+package fzzyhmstrs.pack_it_up.item;
+
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.Nullable;
+
+public class PackScreenHandlerFactory implements ExtendedScreenHandlerFactory {
+
+    public PackScreenHandlerFactory(Inventory inventory, PackItem.ModuleTier tier, ItemStack stack, Hand hand){
+        this.inventory = inventory;
+        this.tier = tier;
+        this.hand = hand.name();
+        this.stack = stack;
+    }
+
+    private final Inventory inventory;
+    private final PackItem.ModuleTier tier;
+    private final String hand;
+    private final ItemStack stack;
+
+    @Override
+    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+        buf.writeByte(tier.id);
+        buf.writeByte(tier.slots);
+        buf.writeByte(tier.height);
+        buf.writeString(hand);
+    }
+
+    @Override
+    public Text getDisplayName() {
+        return Text.translatable("pack_it_up.pack_bench_handler");
+    }
+
+    @Nullable
+    @Override
+    public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+        return new PackScreenHandler(syncId,inv,inventory,tier.height,stack, ScreenHandlerContext.create(player.world, BlockPos.ORIGIN));
+    }
+}

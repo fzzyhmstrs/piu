@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "pack_it_up:item/hiking_frame"
-  }
-}

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:block/cube",
   "textures": {
-    "down": "pack_it_up:block/oak_planks",
+    "down": "pack_it_up:block/pack_bench_bottom",
     "east": "pack_it_up:block/pack_bench_side",
     "north": "pack_it_up:block/pack_bench_front",
     "particle": "pack_it_up:block/pack_bench_front",
-    "south": "pack_it_up:block/pack_bench_back",
+    "south": "pack_it_up:block/pack_bench_front",
     "up": "pack_it_up:block/pack_bench_top",
     "west": "pack_it_up:block/pack_bench_side"
   }

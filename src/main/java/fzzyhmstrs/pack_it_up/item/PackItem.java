@@ -1,78 +1,148 @@
 package fzzyhmstrs.pack_it_up.item;
 
+import fzzyhmstrs.pack_it_up.PIU;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
+import net.minecraft.block.OreBlock;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.function.Predicate;
 
 public class PackItem extends Item {
 
-    public PackItem(Settings settings) {
+    public PackItem(Settings settings, ModuleTier tier, PackItem.StackPredicate stackPredicate) {
         super(settings);
+        this.tier = tier;
+        this.stackPredicate = stackPredicate;
     }
 
-    public static final String FRAME_ID = "frame_id";
-    public static final String MAIN_MODULE_ID = "main_module_id";
-    public static final String MAIN_MODULE_2_ID = "main_module_2_id";
-    public static final String SIDE_MODULE_ID = "side_module_id";
     private static final String INVENTORY = "pack_inventory";
 
+    private final ModuleTier tier;
+    private final PackItem.StackPredicate stackPredicate;
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        tooltip.add(Text.translatable(stackPredicate.translationKey).formatted(Formatting.ITALIC));
+    }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
-        if (world.isClient) return TypedActionResult.fail(stack);
-        NbtCompound nbt = stack.getNbt();
-        if (nbt != null) {
-            if (PackInventory.hasPackNbt(nbt)) {
-                PackInventory inventory = PackInventory.fromNbt(nbt, user);
-                Map<String,String> map = getModules(stack);
-                //open screen with inventory, stack, and map
-                return TypedActionResult.success(stack);
-            }
+        if (world.isClient) {
+            world.playSound(user,user.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.MASTER,0.5f,1.0f);
+            return TypedActionResult.fail(stack);
         }
+        Inventory inventory;
+        if (tier == ModuleTier.ENDER){
+            inventory = user.getEnderChestInventory();
+        } else {
+            inventory = getInventory(stack);
+        }
+
+        user.openHandledScreen(new PackScreenHandlerFactory(inventory, tier, stack, hand));
         return super.use(world, user, hand);
     }
 
-    public static Map<String,String> getModules(ItemStack stack){
-        NbtCompound nbt = stack.getNbt();
-        if (nbt == null) return Map.of();
-        Map<String,String> map = new HashMap<>(6,0.66f);
-        if (nbt.contains(FRAME_ID)){
-            map.put(FRAME_ID,nbt.getString(FRAME_ID));
-        }
-        if (nbt.contains(MAIN_MODULE_ID)){
-            map.put(MAIN_MODULE_ID,nbt.getString(MAIN_MODULE_ID));
-        }
-        if (nbt.contains(MAIN_MODULE_2_ID)){
-            map.put(MAIN_MODULE_2_ID,nbt.getString(MAIN_MODULE_2_ID));
-        }
-        if (nbt.contains(SIDE_MODULE_ID)){
-            map.put(SIDE_MODULE_ID,nbt.getString(SIDE_MODULE_ID));
-        }
-        return map;
+    public static void saveInventory(ItemStack stack, PackInventory inventory){
+        NbtCompound stackNbt = stack.getOrCreateNbt();
+        NbtCompound inventoryNbt = new NbtCompound();
+        inventory.toNbt(inventoryNbt);
+        stackNbt.put(INVENTORY,stackNbt);
     }
 
-    public static void writeModules(Item f, Item m1, Item m2, Item sm, ItemStack pack){
-        NbtCompound nbt = pack.getOrCreateNbt();
-        if (f instanceof PackFrameItem) {
-            nbt.putString(FRAME_ID, Registry.ITEM.getId(f).toString());
+    public PackInventory getInventory(ItemStack stack){
+        NbtCompound nbt = stack.getNbt();
+        if (nbt == null){
+            return new PackInventory(tier.slots,stackPredicate);
         }
-        if (m1 instanceof PackModuleItem) {
-            nbt.putString(MAIN_MODULE_ID, Registry.ITEM.getId(m1).toString());
+        if (!nbt.contains(INVENTORY)){
+            return new PackInventory(tier.slots,stackPredicate);
         }
-        if (m2 instanceof PackModuleItem) {
-            nbt.putString(MAIN_MODULE_2_ID, Registry.ITEM.getId(m2).toString());
+        NbtCompound packInv = nbt.getCompound(INVENTORY);
+        return PackInventory.fromNbt(tier.slots,packInv);
+    }
+
+
+    public enum StackPredicate implements Predicate<ItemStack>{
+        ANY(stack -> true,"pack_it_up.predicate.any"),
+        BLOCK(stack -> stack.getItem() instanceof BlockItem,"pack_it_up.predicate.block"),
+        FOOD(stack -> stack.isIn(ConventionalItemTags.FOODS),"pack_it_up.predicate.food"),
+        PLANTS(stack-> stack.isIn(PIU.PLANT_ITEMS), "pack_it_up.predicate.plants"),
+        TOOL(ItemStack::isDamageable,"pack_it_up.predicate.tool"),
+        MAGIC(stack -> stack.getItem() instanceof EnchantedBookItem || stack.getItem() instanceof PotionItem || stack.getItem() instanceof TippedArrowItem,"pack_it_up.predicate.magic"),
+        ORE(stack-> {
+            boolean bl1 = stack.isIn(ConventionalItemTags.ORES);
+            boolean bl2 = stack.isIn(PIU.GEMS);
+            if (stack.getItem() instanceof BlockItem blockItem){
+                return bl1 || bl2 || blockItem.getBlock() instanceof OreBlock;
+            } else {
+                return bl1 || bl2;
+            }
+        },"pack_it_up.predicate.ore");
+
+        private static final String PREDICATE = "stack_predicate";
+        private final Predicate<ItemStack> predicate;
+        public final String translationKey;
+
+        StackPredicate(Predicate<ItemStack> predicate, String key){
+            this.predicate = predicate;
+            this.translationKey = key;
         }
-        if (sm instanceof PackModuleItem) {
-            nbt.putString(SIDE_MODULE_ID, Registry.ITEM.getId(sm).toString());
+
+        @Override
+        public boolean test(ItemStack stack) {
+            return predicate.test(stack);
+        }
+
+        public static StackPredicate fromNbt(NbtCompound nbt){
+            if (!nbt.contains(PREDICATE)){
+                return ANY;
+            } else {
+                String predicateId = nbt.getString(PREDICATE);
+                StackPredicate predicate;
+                try {
+                    predicate = StackPredicate.valueOf(predicateId);
+                } catch (Exception e){
+                    predicate = ANY;
+                }
+                return predicate;
+            }
+        }
+
+        public void toNbt(NbtCompound nbt){
+            nbt.putString(PREDICATE,this.name());
+        }
+    }
+
+    public enum ModuleTier{
+        PACK(0,2, 18),
+        SPECIAL(1,3,27),
+        BIG_PACK(2,4,36),
+        TOOL(3,6,54),
+        ENDER(4,3,27),
+        NETHERITE(5,6,54);
+
+        public final int height;
+        public final int slots;
+        public final int id;
+
+        ModuleTier(int id,int height, int slots){
+            this.id = id;
+            this.height = height;
+            this.slots = slots;
         }
     }
 

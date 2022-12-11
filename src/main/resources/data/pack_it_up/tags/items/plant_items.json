@@ -3,6 +3,8 @@
 	"values": [
 		"#minecraft:flowers",
 		"#minecraft:saplings",
+		"#minecraft:logs",
+		"#minecraft:leaves",
 		"#c:seeds"
 	]
 }

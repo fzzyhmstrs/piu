@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "pack_it_up:item/extreme_backpack_bag"
+  }
+}
