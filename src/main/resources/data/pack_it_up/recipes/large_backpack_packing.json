@@ -1,0 +1,12 @@
+{
+  "type": "pack_it_up:packing",
+  "base": {
+    "item": "pack_it_up:backpack"
+  },
+  "addition": {
+    "item": "pack_it_up:large_backpack_bag"
+  },
+  "result": {
+    "item": "pack_it_up:large_backpack"
+  }
+}

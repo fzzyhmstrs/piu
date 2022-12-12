@@ -5,6 +5,7 @@ import fzzyhmstrs.pack_it_up.block.PackBenchScreenHandler;
 import fzzyhmstrs.pack_it_up.item.PackScreenHandler;
 import fzzyhmstrs.pack_it_up.recipe.PackBenchRecipe;
 import fzzyhmstrs.pack_it_up.recipe.PackBenchRecipeSerializer;
+import fzzyhmstrs.pack_it_up.registry.RegisterBlock;
 import fzzyhmstrs.pack_it_up.registry.RegisterItem;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
@@ -20,6 +21,7 @@ public class PIU implements ModInitializer {
     public static String MOD_ID = "pack_it_up";
 
     public static TagKey<Item> PLANT_ITEMS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"plant_items"));
+    public static TagKey<Item> LARGE_BACKPACKS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"large_backpacks"));
     public static TagKey<Item> GEMS = TagKey.of(Registry.ITEM_KEY,new Identifier("c","gems"));
     public static TagKey<Item> SEEDS = TagKey.of(Registry.ITEM_KEY,new Identifier("c","seeds"));
 
@@ -32,6 +34,7 @@ public class PIU implements ModInitializer {
     @Override
     public void onInitialize() {
         RegisterItem.init();
+        RegisterBlock.init();
         Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(MOD_ID, PackBenchRecipe.ID), new PackBenchRecipeSerializer());
     }
 }

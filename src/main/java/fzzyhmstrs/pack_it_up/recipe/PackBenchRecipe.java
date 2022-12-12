@@ -16,7 +16,7 @@ public class PackBenchRecipe implements Recipe<Inventory> {
     final Ingredient addition;
     final ItemStack result;
     private final Identifier id;
-    public static final String ID = "pack_bench_recipe";
+    public static final String ID = "packing";
     public static final RecipeType<PackBenchRecipe> TYPE = new RecipeType<>() {
     };
 

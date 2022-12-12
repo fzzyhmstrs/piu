@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"OEO",
+		"OHO",
+		"OOO"
+	],
+	"key": {
+		"E": {
+			"item": "minecraft:ender_eye"
+		},
+		"O": {
+			"item": "minecraft:obsidian"
+		},
+		"H": {
+			"item": "pack_it_up:large_backpack_bag"
+		}
+	},
+	"result": {
+		"item": "pack_it_up:enderpack_bag"
+	}
+}
+

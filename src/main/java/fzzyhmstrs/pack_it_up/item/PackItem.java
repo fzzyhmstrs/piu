@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class PackItem extends Item {
+public class PackItem extends FrameItem {
 
     public PackItem(Settings settings, ModuleTier tier, PackItem.StackPredicate stackPredicate) {
         super(settings);
@@ -53,14 +54,19 @@ public class PackItem extends Item {
         }
 
         user.openHandledScreen(new PackScreenHandlerFactory(inventory, tier, stack, hand));
-        return super.use(world, user, hand);
+        return TypedActionResult.success(stack);
     }
 
     public static void saveInventory(ItemStack stack, PackInventory inventory){
+        System.out.println("saving A");
         NbtCompound stackNbt = stack.getOrCreateNbt();
+        System.out.println("saving B");
         NbtCompound inventoryNbt = new NbtCompound();
+        System.out.println("saving C");
         inventory.toNbt(inventoryNbt);
-        stackNbt.put(INVENTORY,stackNbt);
+        System.out.println("saving D");
+        stackNbt.put(INVENTORY,inventoryNbt);
+        System.out.println("saving E");
     }
 
     public PackInventory getInventory(ItemStack stack){
@@ -78,6 +84,7 @@ public class PackItem extends Item {
 
     public enum StackPredicate implements Predicate<ItemStack>{
         ANY(stack -> true,"pack_it_up.predicate.any"),
+        SPECIAL(stack -> true,"pack_it_up.predicate.any"),
         BLOCK(stack -> stack.getItem() instanceof BlockItem,"pack_it_up.predicate.block"),
         FOOD(stack -> stack.isIn(ConventionalItemTags.FOODS),"pack_it_up.predicate.food"),
         PLANTS(stack-> stack.isIn(PIU.PLANT_ITEMS), "pack_it_up.predicate.plants"),
@@ -124,6 +131,21 @@ public class PackItem extends Item {
 
         public void toNbt(NbtCompound nbt){
             nbt.putString(PREDICATE,this.name());
+        }
+
+        public static StackPredicate fromBuf(PacketByteBuf buf){
+            String predicateId = buf.readString();
+            StackPredicate predicate;
+            try {
+                predicate = StackPredicate.valueOf(predicateId);
+            } catch (Exception e){
+                predicate = ANY;
+            }
+            return predicate;
+        }
+
+        public void toBuf(PacketByteBuf buf){
+            buf.writeString(this.name());
         }
     }
 

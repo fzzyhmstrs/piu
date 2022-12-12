@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"LCL",
+		"CHC",
+		"LCL"
+	],
+	"key": {
+		"L": {
+			"item": "minecraft:leather"
+		},
+		"C": {
+			"item": "pack_it_up:cloth"
+		},
+		"H": {
+			"item": "minecraft:chest"
+		}
+	},
+	"result": {
+		"item": "pack_it_up:backpack_bag"
+	}
+}
+

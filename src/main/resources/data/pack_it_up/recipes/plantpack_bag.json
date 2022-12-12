@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"FCF",
+		"CHC",
+		"FCF"
+	],
+	"key": {
+		"F": {
+			"tag": "minecraft:flowers"
+		},
+		"C": {
+			"item": "pack_it_up:cloth"
+		},
+		"H": {
+			"item": "pack_it_up:large_backpack_bag"
+		}
+	},
+	"result": {
+		"item": "pack_it_up:plantpack_bag"
+	}
+}
+

@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"LBL",
+		"BHB",
+		"LBL"
+	],
+	"key": {
+		"L": {
+			"tag": "c:gems"
+		},
+		"B": {
+			"item": "minecraft:enchanted_book"
+		},
+		"H": {
+			"item": "pack_it_up:large_backpack_bag"
+		}
+	},
+	"result": {
+		"item": "pack_it_up:magicpack_bag"
+	}
+}
+

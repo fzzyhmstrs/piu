@@ -20,7 +20,7 @@ public class PackInventory extends SimpleInventory {
         this.stackPredicate = stackPredicate;
     }
     private final int maxStack;
-    private final PackItem.StackPredicate stackPredicate;
+    final PackItem.StackPredicate stackPredicate;
 
     public List<ItemStack> getStacks(){
         List<ItemStack> list = new LinkedList<>();
@@ -31,9 +31,15 @@ public class PackInventory extends SimpleInventory {
     }
 
     public NbtCompound toNbt(NbtCompound nbt){
+        System.out.println("A");
         stackPredicate.toNbt(nbt);
+        System.out.println(nbt);
+        System.out.println("B");
         NbtList list = this.toNbtList();
+        System.out.println(list);
+        System.out.println("C");
         nbt.put("stack_contents",list);
+        System.out.println("D");
         return nbt;
     }
 

@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"WH",
+		"HW"
+	],
+	"key": {
+		"W": {
+			"tag": "minecraft:wool"
+		},
+		"H": {
+			"item": "minecraft:wheat"
+		}
+	},
+	"result": {
+		"item": "pack_it_up:cloth"
+	}
+}
+

@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CGC",
+		"IHI",
+		"CGC"
+	],
+	"key": {
+		"I": {
+			"item": "minecraft:raw_iron"
+		},
+		"C": {
+			"item": "minecraft:raw_copper_block"
+		},
+		"G": {
+			"item": "minecraft:raw_gold"
+		},
+		"H": {
+			"item": "pack_it_up:large_backpack_bag"
+		}
+	},
+	"result": {
+		"item": "pack_it_up:orepack_bag"
+	}
+}
+

@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"LL",
+		"HH",
+		"HH"
+	],
+	"key": {
+		"L": {
+			"item": "minecraft:ladder"
+		},
+		"H": {
+			"tag": "minecraft:planks"
+		}
+	},
+	"result": {
+		"item": "pack_it_up:pack_bench"
+	}
+}
+

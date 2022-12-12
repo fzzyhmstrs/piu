@@ -31,14 +31,17 @@ public class PackScreenHandlerFactory implements ExtendedScreenHandlerFactory {
     @Override
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
         buf.writeByte(tier.id);
-        buf.writeByte(tier.slots);
+        if (tier != PackItem.ModuleTier.ENDER){
+            buf.writeByte(tier.slots);
+            ((PackInventory)inventory).stackPredicate.toBuf(buf);
+        }
         buf.writeByte(tier.height);
         buf.writeString(hand);
     }
 
     @Override
     public Text getDisplayName() {
-        return Text.translatable("pack_it_up.pack_bench_handler");
+        return stack.getName();
     }
 
     @Nullable
