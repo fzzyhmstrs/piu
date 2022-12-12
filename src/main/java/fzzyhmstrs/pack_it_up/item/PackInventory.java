@@ -1,5 +1,6 @@
 package fzzyhmstrs.pack_it_up.item;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,16 +31,31 @@ public class PackInventory extends SimpleInventory {
         return list;
     }
 
+    public void dump(PlayerEntity player){
+        for (int i = 0; i < size(); i++){
+            player.getInventory().offerOrDrop(getStack(i).copy());
+            setStack(i,ItemStack.EMPTY);
+        }
+    }
+
+    public void validate(PlayerEntity player, PackItem.StackPredicate newPredicate){
+        for (int i = 0; i < size(); i++){
+            ItemStack test = getStack(i).copy();
+            if (!newPredicate.test(test) || test.getCount() > maxStack){
+                player.getInventory().offerOrDrop(test);
+                setStack(i,ItemStack.EMPTY);
+            }
+        }
+    }
+
     public NbtCompound toNbt(NbtCompound nbt){
-        System.out.println("A");
-        stackPredicate.toNbt(nbt);
-        System.out.println(nbt);
-        System.out.println("B");
+        return toNbt(nbt,stackPredicate);
+    }
+
+    public NbtCompound toNbt(NbtCompound nbt, PackItem.StackPredicate predicate){
+        predicate.toNbt(nbt);
         NbtList list = this.toNbtList();
-        System.out.println(list);
-        System.out.println("C");
         nbt.put("stack_contents",list);
-        System.out.println("D");
         return nbt;
     }
 

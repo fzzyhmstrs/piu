@@ -40,6 +40,20 @@ public class PackItem extends FrameItem {
     }
 
     @Override
+    public void onCraft(ItemStack stack, World world, PlayerEntity player) {
+        NbtCompound nbt = stack.getNbt();
+        if (nbt != null){
+            PackInventory inventory = this.getInventory(stack);
+            if (this.tier == ModuleTier.ENDER){
+                inventory.dump(player);
+            } else {
+                inventory.validate(player, stackPredicate);
+            }
+            PackItem.saveInventory(stack, inventory, stackPredicate);
+        }
+    }
+
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         if (world.isClient) {
@@ -58,15 +72,17 @@ public class PackItem extends FrameItem {
     }
 
     public static void saveInventory(ItemStack stack, PackInventory inventory){
-        System.out.println("saving A");
         NbtCompound stackNbt = stack.getOrCreateNbt();
-        System.out.println("saving B");
         NbtCompound inventoryNbt = new NbtCompound();
-        System.out.println("saving C");
         inventory.toNbt(inventoryNbt);
-        System.out.println("saving D");
         stackNbt.put(INVENTORY,inventoryNbt);
-        System.out.println("saving E");
+    }
+
+    public static void saveInventory(ItemStack stack, PackInventory inventory, StackPredicate newPredicate){
+        NbtCompound stackNbt = stack.getOrCreateNbt();
+        NbtCompound inventoryNbt = new NbtCompound();
+        inventory.toNbt(inventoryNbt, newPredicate);
+        stackNbt.put(INVENTORY,inventoryNbt);
     }
 
     public PackInventory getInventory(ItemStack stack){
@@ -153,7 +169,7 @@ public class PackItem extends FrameItem {
         PACK(0,2, 18),
         SPECIAL(1,3,27),
         BIG_PACK(2,4,36),
-        TOOL(3,6,54),
+        TOOL(3,7,63),
         ENDER(4,3,27),
         NETHERITE(5,6,54);
 

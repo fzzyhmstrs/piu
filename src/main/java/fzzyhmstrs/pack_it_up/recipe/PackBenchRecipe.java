@@ -8,13 +8,17 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class PackBenchRecipe implements Recipe<Inventory> {
 
-    final Ingredient base;
-    final Ingredient addition;
-    final ItemStack result;
+    public final Ingredient base;
+    public final Ingredient addition;
+    public final ItemStack result;
     private final Identifier id;
     public static final String ID = "packing";
     public static final RecipeType<PackBenchRecipe> TYPE = new RecipeType<>() {

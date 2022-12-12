@@ -1,6 +1,7 @@
 package fzzyhmstrs.pack_it_up.item;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import fzzyhmstrs.pack_it_up.PIU;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.sound.PositionedSoundInstance;
@@ -19,7 +20,7 @@ public class PackScreen extends HandledScreen<PackScreenHandler> {
         this.playerInventoryTitleY = this.backgroundHeight - 94;
     }
 
-    private static final Identifier TEXTURE = new Identifier("textures/gui/container/generic_54.png");
+    private static final Identifier TEXTURE = new Identifier(PIU.MOD_ID,"textures/gui/pack_screen.png");
     private final int rows;
 
     @Override
@@ -37,7 +38,7 @@ public class PackScreen extends HandledScreen<PackScreenHandler> {
         int i = (this.width - this.backgroundWidth) / 2;
         int j = (this.height - this.backgroundHeight) / 2;
         this.drawTexture(matrices, i, j, 0, 0, this.backgroundWidth, this.rows * 18 + 17);
-        this.drawTexture(matrices, i, j + this.rows * 18 + 17, 0, 126, this.backgroundWidth, 96);
+        this.drawTexture(matrices, i, j + this.rows * 18 + 17, 0, 144, this.backgroundWidth, 96);
     }
 
     @Override

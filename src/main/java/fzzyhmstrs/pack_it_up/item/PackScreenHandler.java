@@ -179,7 +179,11 @@ public class PackScreenHandler extends ScreenHandler {
         @Override
         public int getMaxItemCount(ItemStack stack) {
             if (stack.getMaxCount() < 64){
-                return stack.getMaxCount();
+                if (stack.isDamageable()) {
+                    return stack.getMaxCount();
+                } else {
+                    return stack.getMaxCount() * 4;
+                }
             }
             return getMaxItemCount();
         }
