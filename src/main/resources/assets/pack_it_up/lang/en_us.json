@@ -1,5 +1,6 @@
 {
   "emi.category.pack_it_up.pack_bench": "Pack Bench",
+  "pack_it_up.recipes": "Pack It Up! Recipes",
   "pack_it_up.pack_bench_handler": "Upgrade Backpack",
   "pack_it_up.bag_item_tooltip": "Doesn't hold items. Attach to a frame to store stuff!",
   "pack_it_up.predicate.any": "Can hold any item",
