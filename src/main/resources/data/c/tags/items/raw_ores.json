@@ -1,0 +1,105 @@
+{
+	"replace": false,
+	"values": [
+    {
+      "id": "#c:raw_iron_ores",
+      "required": false
+    },
+    {
+      "id": "#c:raw_iron_blocks",
+      "required": false
+    },
+    {
+      "id": "#c:raw_gold_ores",
+      "required": false
+    },
+    {
+      "id": "#c:raw_gold_blocks",
+      "required": false
+    },
+    {
+      "id": "#c:raw_copper_ores",
+      "required": false
+    },
+    {
+      "id": "#c:raw_copper_blocks",
+      "required": false
+    },
+    {
+      "id": "#c:redstone_dusts",
+      "required": false
+    },
+    {
+      "id": "#c:coal",
+      "required": false
+    },
+    {
+      "id": "#c:raw_antimony_ores",
+      "required": false
+    },
+    {
+      "id": "#c:raw_iridium_ores",
+      "required": false
+    },
+    {
+      "id": "#c:raw_lead_ores",
+      "required": false
+    },
+    {
+      "id": "#c:raw_nickel_ores",
+      "required": false
+    },
+    {
+      "id": "#c:raw_nickel_blocks",
+      "required": false
+    },
+    {
+      "id": "#c:raw_platinum_ores",
+      "required": false
+    },
+    {
+      "id": "#c:raw_platinum_blocks",
+      "required": false
+    },
+    {
+      "id": "#c:raw_silver_ores",
+      "required": false
+    },
+    {
+      "id": "#c:raw_silver_blocks",
+      "required": false
+    },
+    {
+      "id": "#c:raw_silvers",
+      "required": false
+    },
+    {
+      "id": "#c:raw_tin_ores",
+      "required": false
+    },
+    {
+      "id": "#c:raw_tin_blocks",
+      "required": false
+    },
+    {
+      "id": "#c:raw_titanium_ores",
+      "required": false
+    },
+    {
+      "id": "#c:raw_titanium_blocks",
+      "required": false
+    },
+    {
+      "id": "#c:raw_tungsten_ores",
+      "required": false
+    },
+    {
+      "id": "#c:raw_tungsten_blocks",
+      "required": false
+    },
+    {
+      "id": "#c:raw_uranium_ores",
+      "required": false
+    }
+	]
+}
