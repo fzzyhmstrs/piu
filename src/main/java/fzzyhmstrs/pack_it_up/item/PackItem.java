@@ -2,7 +2,7 @@ package fzzyhmstrs.pack_it_up.item;
 
 import fzzyhmstrs.pack_it_up.PIU;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
-import net.minecraft.block.OreBlock;
+import net.minecraft.block.ExperienceDroppingBlock;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -110,7 +110,7 @@ public class PackItem extends FrameItem {
             boolean bl1 = stack.isIn(ConventionalItemTags.ORES);
             boolean bl2 = stack.isIn(PIU.GEMS);
             if (stack.getItem() instanceof BlockItem blockItem){
-                return bl1 || bl2 || blockItem.getBlock() instanceof OreBlock;
+                return bl1 || bl2 || blockItem.getBlock() instanceof ExperienceDroppingBlock;
             } else {
                 return bl1 || bl2;
             }

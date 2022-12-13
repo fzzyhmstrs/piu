@@ -7,11 +7,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class PackInventory extends SimpleInventory {
@@ -89,7 +88,7 @@ public class PackInventory extends SimpleInventory {
             ItemStack stack = this.getStack(i);
             compound.putShort("slot", (short)i);
             compound.putShort("count",(short)stack.getCount());
-            Identifier identifier = Registry.ITEM.getId(stack.getItem());
+            Identifier identifier = Registries.ITEM.getId(stack.getItem());
             compound.putString("id",identifier.toString());
             if (stack.getNbt() != null){
                 compound.put("tag",stack.getNbt().copy());
@@ -104,7 +103,7 @@ public class PackInventory extends SimpleInventory {
         for (int i = 0; i < nbtList.size(); i++){
             NbtCompound compound = nbtList.getCompound(i);
             int count = compound.getShort("count");
-            Item item = Registry.ITEM.get(new Identifier(compound.getString("id")));
+            Item item = Registries.ITEM.get(new Identifier(compound.getString("id")));
             ItemStack stack = new ItemStack(item,count);
             if (compound.contains("tag", NbtElement.COMPOUND_TYPE)){
                 NbtCompound itemNbt = compound.getCompound("tag");
