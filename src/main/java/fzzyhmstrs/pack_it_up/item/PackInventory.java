@@ -10,6 +10,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,20 +23,17 @@ public class PackInventory extends SimpleInventory {
     }
     private final int maxStack;
     final PackItem.StackPredicate stackPredicate;
-
-    public List<ItemStack> getStacks(){
-        List<ItemStack> list = new LinkedList<>();
-        for (int i = 0; i < size(); i++){
-            list.add(getStack(i).copy());
-        }
-        return list;
-    }
+    private final List<ItemStack> stacksToDrop = new ArrayList<>();
 
     public void dump(PlayerEntity player){
         for (int i = 0; i < size(); i++){
             player.getInventory().offerOrDrop(getStack(i).copy());
             setStack(i,ItemStack.EMPTY);
         }
+        for (ItemStack stack: stacksToDrop){
+            player.getInventory().offerOrDrop(stack);
+        }
+        stacksToDrop.clear();
     }
 
     public void validate(PlayerEntity player, PackItem.StackPredicate newPredicate){
@@ -46,6 +44,10 @@ public class PackInventory extends SimpleInventory {
                 setStack(i,ItemStack.EMPTY);
             }
         }
+        for (ItemStack stack: stacksToDrop){
+            player.getInventory().offerOrDrop(stack);
+        }
+        stacksToDrop.clear();
     }
 
     public NbtCompound toNbt(NbtCompound nbt){
@@ -113,7 +115,11 @@ public class PackInventory extends SimpleInventory {
                 stack.setDamage(stack.getDamage());
             }
             int slot = compound.getShort("slot");
-            this.setStack(slot,stack);
+            if (i < this.size()) {
+                this.setStack(slot, stack);
+            } else {
+                stacksToDrop.add(stack);
+            }
         }
     }
 }

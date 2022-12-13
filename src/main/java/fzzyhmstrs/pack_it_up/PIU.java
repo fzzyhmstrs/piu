@@ -21,7 +21,9 @@ public class PIU implements ModInitializer {
     public static String MOD_ID = "pack_it_up";
 
     public static TagKey<Item> PLANT_ITEMS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"plant_items"));
+    public static TagKey<Item> BACKPACKS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"backpacks"));
     public static TagKey<Item> LARGE_BACKPACKS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"large_backpacks"));
+    public static TagKey<Item> SMALL_BACKPACKS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"small_backpacks"));
     public static TagKey<Item> GEMS = TagKey.of(Registry.ITEM_KEY,new Identifier("c","gems"));
     public static TagKey<Item> SEEDS = TagKey.of(Registry.ITEM_KEY,new Identifier("c","seeds"));
 

@@ -1,19 +1,19 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"FCF",
-		"CHC",
-		"FCF"
+		"IFI",
+		"FHF",
+		"IFI"
 	],
 	"key": {
 		"F": {
 			"tag": "c:foods"
 		},
-		"C": {
-			"item": "pack_it_up:cloth"
+		"I": {
+			"item": "minecraft:iron_block"
 		},
 		"H": {
-			"item": "pack_it_up:large_backpack_bag"
+			"item": "pack_it_up:backpack_bag"
 		}
 	},
 	"result": {

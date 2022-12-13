@@ -6,8 +6,6 @@
 		"pack_it_up:blockpack",
 		"pack_it_up:orepack",
 		"pack_it_up:magicpack",
-		"pack_it_up:lunchpack",
-		"pack_it_up:plantpack",
 		"pack_it_up:enderpack",
 		"pack_it_up:toolpack"
 	]

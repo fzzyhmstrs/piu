@@ -57,7 +57,7 @@ public class PackBenchRecipe implements Recipe<Inventory> {
 
     @Override
     public ItemStack getOutput() {
-        return result;
+        return result.copy();
     }
 
     @Override
