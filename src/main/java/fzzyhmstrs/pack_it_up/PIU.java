@@ -26,6 +26,7 @@ public class PIU implements ModInitializer {
     public static TagKey<Item> SMALL_BACKPACKS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"small_backpacks"));
     public static TagKey<Item> GEMS = TagKey.of(Registry.ITEM_KEY,new Identifier("c","gems"));
     public static TagKey<Item> SEEDS = TagKey.of(Registry.ITEM_KEY,new Identifier("c","seeds"));
+    public static TagKey<Item> SEEDS = TagKey.of(Registry.ITEM_KEY,new Identifier("c","raw_ores"));
 
     public static ScreenHandlerType<PackScreenHandler> PACK_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER,new Identifier(MOD_ID,"pack"),new ExtendedScreenHandlerType<>(PackScreenHandler::new));
     public static ScreenHandlerType<PackBenchScreenHandler> PACK_BENCH_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER,new Identifier(MOD_ID,"pack_bench"),new ScreenHandlerType<>(PackBenchScreenHandler::new));
