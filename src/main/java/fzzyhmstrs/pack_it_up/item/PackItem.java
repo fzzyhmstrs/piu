@@ -109,10 +109,11 @@ public class PackItem extends FrameItem {
         ORE(stack-> {
             boolean bl1 = stack.isIn(ConventionalItemTags.ORES);
             boolean bl2 = stack.isIn(PIU.GEMS);
+            boolean bl3 = stack.isIn(PIU.RAW_ORES);
             if (stack.getItem() instanceof BlockItem blockItem){
-                return bl1 || bl2 || blockItem.getBlock() instanceof OreBlock;
+                return bl1 || bl2 || bl3 || blockItem.getBlock() instanceof OreBlock;
             } else {
-                return bl1 || bl2;
+                return bl1 || bl2 || bl3;
             }
         },"pack_it_up.predicate.ore");
 
