@@ -4,21 +4,14 @@ import fzzyhmstrs.pack_it_up.PIU;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Hand;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntryList;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class PackScreenHandler extends ScreenHandler {
 
@@ -63,16 +56,14 @@ public class PackScreenHandler extends ScreenHandler {
     @Override
     public void close(PlayerEntity player) {
         if (this.inventory instanceof PackInventory && !player.world.isClient){
-            System.out.println(stack.getNbt());
             PackItem.saveInventory(stack,(PackInventory) inventory);
-            System.out.println(stack.getNbt());
         }
         super.close(player);
         this.inventory.onClose(player);
     }
 
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int index) {
+    public ItemStack quickMove(PlayerEntity player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot.hasStack()) {
