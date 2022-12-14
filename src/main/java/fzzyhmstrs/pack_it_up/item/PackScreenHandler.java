@@ -1,6 +1,7 @@
 package fzzyhmstrs.pack_it_up.item;
 
 import fzzyhmstrs.pack_it_up.PIU;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -56,7 +57,7 @@ public class PackScreenHandler extends ScreenHandler {
     @Override
     public void close(PlayerEntity player) {
         if (this.inventory instanceof PackInventory && !player.world.isClient){
-            PackItem.saveInventory(stack,(PackInventory) inventory);
+            Packable.saveInventory(stack,(PackInventory) inventory);
         }
         super.close(player);
         this.inventory.onClose(player);
@@ -200,7 +201,7 @@ public class PackScreenHandler extends ScreenHandler {
         }
 
         private boolean stackMovementIsAllowed(ItemStack stack) {
-            return !(stack.getItem() instanceof PackItem) && stack != packStack;
+            return !(stack.getItem() instanceof Packable) && stack != packStack;
         }
     }
 }

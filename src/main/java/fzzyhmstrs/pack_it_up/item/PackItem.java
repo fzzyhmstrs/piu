@@ -21,15 +21,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class PackItem extends FrameItem {
+public class PackItem extends Item implements Packable {
 
     public PackItem(Settings settings, ModuleTier tier, PackItem.StackPredicate stackPredicate) {
         super(settings);
         this.tier = tier;
         this.stackPredicate = stackPredicate;
     }
-
-    private static final String INVENTORY = "pack_inventory";
 
     private final ModuleTier tier;
     private final PackItem.StackPredicate stackPredicate;
@@ -43,13 +41,13 @@ public class PackItem extends FrameItem {
     public void onCraft(ItemStack stack, World world, PlayerEntity player) {
         NbtCompound nbt = stack.getNbt();
         if (nbt != null){
-            PackInventory inventory = this.getInventory(stack);
+            PackInventory inventory = Packable.getInventory(stack, tier.slots, stackPredicate);
             if (this.tier == ModuleTier.ENDER){
                 inventory.dump(player);
             } else {
                 inventory.validate(player, stackPredicate);
             }
-            PackItem.saveInventory(stack, inventory, stackPredicate);
+            Packable.saveInventory(stack, inventory, stackPredicate);
         }
     }
 
@@ -64,39 +62,12 @@ public class PackItem extends FrameItem {
         if (tier == ModuleTier.ENDER){
             inventory = user.getEnderChestInventory();
         } else {
-            inventory = getInventory(stack);
+            inventory = Packable.getInventory(stack, tier.slots, stackPredicate);
         }
 
         user.openHandledScreen(new PackScreenHandlerFactory(inventory, tier, stack, hand));
         return TypedActionResult.success(stack);
     }
-
-    public static void saveInventory(ItemStack stack, PackInventory inventory){
-        NbtCompound stackNbt = stack.getOrCreateNbt();
-        NbtCompound inventoryNbt = new NbtCompound();
-        inventory.toNbt(inventoryNbt);
-        stackNbt.put(INVENTORY,inventoryNbt);
-    }
-
-    public static void saveInventory(ItemStack stack, PackInventory inventory, StackPredicate newPredicate){
-        NbtCompound stackNbt = stack.getOrCreateNbt();
-        NbtCompound inventoryNbt = new NbtCompound();
-        inventory.toNbt(inventoryNbt, newPredicate);
-        stackNbt.put(INVENTORY,inventoryNbt);
-    }
-
-    public PackInventory getInventory(ItemStack stack){
-        NbtCompound nbt = stack.getNbt();
-        if (nbt == null){
-            return new PackInventory(tier.slots,stackPredicate);
-        }
-        if (!nbt.contains(INVENTORY)){
-            return new PackInventory(tier.slots,stackPredicate);
-        }
-        NbtCompound packInv = nbt.getCompound(INVENTORY);
-        return PackInventory.fromNbt(tier.slots,packInv);
-    }
-
 
     public enum StackPredicate implements Predicate<ItemStack>{
         ANY(stack -> true,"pack_it_up.predicate.any"),
