@@ -25,6 +25,9 @@
   "item.pack_it_up.magicpack": "Magicpack",
   "item.pack_it_up.lunchpack": "Lunchpack",
   "item.pack_it_up.enderpack": "Enderpack",
+  "item.pack_it_up.iron_armorpack": "Iron Armorpack",
+  "item.pack_it_up.golden_armorpack": "Golden Armorpack",
+  "item.pack_it_up.netherite_armorpack": "Netherite Armorpack",
   "item.pack_it_up.backpack_bag": "Backpack Bag",
   "item.pack_it_up.large_backpack_bag": "Large Backpack Bag",
   "item.pack_it_up.extreme_backpack_bag": "Extreme Backpack Bag",
@@ -34,5 +37,8 @@
   "item.pack_it_up.toolpack_bag": "Toolpack Bag",
   "item.pack_it_up.magicpack_bag": "Magicpack Bag",
   "item.pack_it_up.lunchpack_bag": "Lunchpack Bag",
-  "item.pack_it_up.enderpack_bag": "Enderpack Bag"
+  "item.pack_it_up.enderpack_bag": "Enderpack Bag",
+  "item.pack_it_up.iron_armorpack_bag": "Iron Armorpack Bag",
+  "item.pack_it_up.golden_armorpack_bag": "Golden Armorpack Bag",
+  "item.pack_it_up.netherite_armorpack_bag": "Netherite Armorpack Bag"
 }

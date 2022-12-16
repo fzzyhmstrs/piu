@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"GCG",
+		"CHC",
+		"GCG"
+	],
+	"key": {
+		"G": {
+			"item": "minecraft:golden_chestplate"
+		},
+		"C": {
+			"item": "pack_it_up:cloth"
+		},
+		"H": {
+			"item": "pack_it_up:iron_armorpack_bag"
+		}
+	},
+	"result": {
+		"item": "pack_it_up:golden_armorpack_bag"
+	}
+}
+
