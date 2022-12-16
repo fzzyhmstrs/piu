@@ -37,6 +37,7 @@ public class PackScreenHandlerFactory implements ExtendedScreenHandlerFactory {
         }
         buf.writeByte(tier.height);
         buf.writeByte(index);
+        buf.writeByte(index);
     }
 
     @Override

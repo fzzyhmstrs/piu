@@ -11,12 +11,15 @@ import fzzyhmstrs.pack_it_up.recipe.PackBenchRecipeSerializer;
 import fzzyhmstrs.pack_it_up.registry.RegisterBlock;
 import fzzyhmstrs.pack_it_up.registry.RegisterItem;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Hand;
@@ -28,6 +31,7 @@ public class PIU implements ModInitializer {
 
     public static String MOD_ID = "pack_it_up";
     public static Identifier OPEN_BACKPACK = new Identifier(MOD_ID,"open_backpack");
+    public static Identifier SOUND_BACKPACK = new Identifier(MOD_ID,"sound_backpack");
 
     public static TagKey<Item> PLANT_ITEMS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"plant_items"));
     public static TagKey<Item> BACKPACKS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"backpacks"));
@@ -53,14 +57,21 @@ public class PIU implements ModInitializer {
                 PlayerInventory inventory = player.getInventory();
                 ItemStack chest = inventory.armor.get(EquipmentSlot.CHEST.getEntitySlotId());
                 if (chest.getItem() instanceof ArmoredPackItem armoredPackItem){
+                    PacketByteBuf buf2 = PacketByteBufs.create();
+                    buf2.writeBoolean(true);
+                    ServerPlayNetworking.send(player,SOUND_BACKPACK,buf2);
                     armoredPackItem.openPackScreenHandler(player, chest);
                 }  else {
-                    ItemStack mainhand = inventory.getMainHandStack();
-                    if (mainhand.getItem() instanceof Packable packableItem){
-                        packableItem.openPackScreenHandler(player,mainhand);
+                    for (ItemStack stack : inventory.main){
+                        if (stack.getItem() instanceof Packable packableItem){
+                            PacketByteBuf buf2 = PacketByteBufs.create();
+                            buf2.writeBoolean(true);
+                            ServerPlayNetworking.send(player,SOUND_BACKPACK,buf2);
+                            packableItem.openPackScreenHandler(player,stack);
+                        }
                     }
                 }
             }
-        });
+        }));
     }
 }

@@ -84,13 +84,18 @@ public class ArmoredPackItem extends ArmorItem implements Packable {
             inventory = Packable.getInventory(stack, tier.slots, stackPredicate);
         }
         int index = user.getInventory().indexOf(stack);
-        user.openHandledScreen(new PackScreenHandlerFactory(inventory, tier, stack, index));
+        if (index == -1){
+            index = user.getInventory().armor.indexOf(stack) * -1;
+        }
+        if (index != -1) {
+            user.openHandledScreen(new PackScreenHandlerFactory(inventory, tier, stack, index));
+        }
     }
 
     public enum Materials implements ArmorMaterial{
         IRON("iron",3, 9, 0.0f),
         GOLD("gold",4, 25, 0.0f),
-        NETHERITE("netherite",5, 15, 1.0f);
+        NETHERITE("netherite",6, 15, 2.0f);
 
         Materials(String name, int protection, int enchantability, float toughness){
             this.name = name;

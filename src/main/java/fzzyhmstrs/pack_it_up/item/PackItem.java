@@ -76,7 +76,9 @@ public class PackItem extends Item implements Packable {
             inventory = Packable.getInventory(stack, tier.slots, stackPredicate);
         }
         int index = user.getInventory().indexOf(stack);
-        user.openHandledScreen(new PackScreenHandlerFactory(inventory, tier, stack, index));
+        if (index != -1) {
+            user.openHandledScreen(new PackScreenHandlerFactory(inventory, tier, stack, index));
+        }
     }
 
     public enum StackPredicate implements Predicate<ItemStack>{

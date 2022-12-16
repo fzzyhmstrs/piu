@@ -32,7 +32,7 @@ public class PackScreenHandler extends ScreenHandler {
         }
         for (j = 0; j < 3; ++j) {
             for (k = 0; k < 9; ++k) {
-                this.addSlot(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, 103 + j * 18 + i));
+                this.addSlot(new PackLockedSlot(playerInventory,stack, k + j * 9 + 9, 8 + k * 18, 103 + j * 18 + i));
             }
         }
         for (j = 0; j < 9; ++j) {
@@ -45,7 +45,7 @@ public class PackScreenHandler extends ScreenHandler {
             syncId,
             playerInventory,buf.readByte() == PackItem.ModuleTier.ENDER.id ? playerInventory.player.getEnderChestInventory() : new PackInventory(buf.readByte(), PackItem.StackPredicate.fromBuf(buf)),
             buf.readByte(),
-            playerInventory.getStack(buf.readByte()),
+            buf.readByte() >= 0 ? playerInventory.getStack(buf.readByte()) : playerInventory.armor.get(buf.readByte() * -1),
             ScreenHandlerContext.EMPTY
         );
     }

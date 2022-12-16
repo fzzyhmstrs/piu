@@ -1,6 +1,7 @@
 package fzzyhmstrs.pack_it_up;
 
 
+import com.sun.jna.platform.win32.WinDef;
 import fzzyhmstrs.pack_it_up.block.PackBenchScreen;
 import fzzyhmstrs.pack_it_up.item.PackScreen;
 import net.fabricmc.api.ClientModInitializer;
@@ -12,7 +13,11 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.world.World;
 import org.lwjgl.glfw.GLFW;
 
 public class PIUClient implements ClientModInitializer {
@@ -35,5 +40,12 @@ public class PIUClient implements ClientModInitializer {
                 ClientPlayNetworking.send(PIU.OPEN_BACKPACK,buf);
             }
         });
+        ClientPlayNetworking.registerGlobalReceiver(PIU.SOUND_BACKPACK,((client, handler, buf, responseSender) -> client.execute(() -> {
+            World world = client.world;
+            PlayerEntity player = client.player;
+            if (world != null && player != null){
+                world.playSound(player,player.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.MASTER,0.5f,1.0f);
+            }
+        })));
     }
 }
