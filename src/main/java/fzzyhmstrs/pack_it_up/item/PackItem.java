@@ -58,15 +58,25 @@ public class PackItem extends Item implements Packable {
             world.playSound(user,user.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.MASTER,0.5f,1.0f);
             return TypedActionResult.fail(stack);
         }
+        openPackScreenHandler(user, tier, stackPredicate, stack);
+        return TypedActionResult.success(stack);
+    }
+
+    @Override
+    public void openPackScreenHandler(PlayerEntity user, ItemStack stack) {
+        openPackScreenHandler(user,tier, stackPredicate, stack);
+    }
+
+    @Override
+    public void openPackScreenHandler(PlayerEntity user, ModuleTier tier, StackPredicate stackPredicate, ItemStack stack) {
         Inventory inventory;
         if (tier == ModuleTier.ENDER){
             inventory = user.getEnderChestInventory();
         } else {
             inventory = Packable.getInventory(stack, tier.slots, stackPredicate);
         }
-
-        user.openHandledScreen(new PackScreenHandlerFactory(inventory, tier, stack, hand));
-        return TypedActionResult.success(stack);
+        int index = user.getInventory().indexOf(stack);
+        user.openHandledScreen(new PackScreenHandlerFactory(inventory, tier, stack, index));
     }
 
     public enum StackPredicate implements Predicate<ItemStack>{

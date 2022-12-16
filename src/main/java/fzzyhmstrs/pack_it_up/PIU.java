@@ -2,16 +2,24 @@ package fzzyhmstrs.pack_it_up;
 
 
 import fzzyhmstrs.pack_it_up.block.PackBenchScreenHandler;
+import fzzyhmstrs.pack_it_up.item.ArmoredPackItem;
+import fzzyhmstrs.pack_it_up.item.PackItem;
 import fzzyhmstrs.pack_it_up.item.PackScreenHandler;
+import fzzyhmstrs.pack_it_up.item.Packable;
 import fzzyhmstrs.pack_it_up.recipe.PackBenchRecipe;
 import fzzyhmstrs.pack_it_up.recipe.PackBenchRecipeSerializer;
 import fzzyhmstrs.pack_it_up.registry.RegisterBlock;
 import fzzyhmstrs.pack_it_up.registry.RegisterItem;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.util.Hand;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -19,6 +27,7 @@ import net.minecraft.util.registry.Registry;
 public class PIU implements ModInitializer {
 
     public static String MOD_ID = "pack_it_up";
+    public static Identifier OPEN_BACKPACK = new Identifier(MOD_ID,"open_backpack");
 
     public static TagKey<Item> PLANT_ITEMS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"plant_items"));
     public static TagKey<Item> BACKPACKS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"backpacks"));
@@ -39,5 +48,19 @@ public class PIU implements ModInitializer {
         RegisterItem.init();
         RegisterBlock.init();
         Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(MOD_ID, PackBenchRecipe.ID), new PackBenchRecipeSerializer());
+        ServerPlayNetworking.registerGlobalReceiver(OPEN_BACKPACK,(server,player,handler,buf,responseSender)-> {
+            if (player.currentScreenHandler == player.playerScreenHandler){
+                PlayerInventory inventory = player.getInventory();
+                ItemStack chest = inventory.armor.get(EquipmentSlot.CHEST.getEntitySlotId());
+                if (chest.getItem() instanceof ArmoredPackItem armoredPackItem){
+                    armoredPackItem.openPackScreenHandler(player, chest);
+                }  else {
+                    ItemStack mainhand = inventory.getMainHandStack();
+                    if (mainhand.getItem() instanceof Packable packableItem){
+                        packableItem.openPackScreenHandler(player,mainhand);
+                    }
+                }
+            }
+        });
     }
 }

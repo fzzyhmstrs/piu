@@ -7,6 +7,8 @@
 		"pack_it_up:orepack",
 		"pack_it_up:magicpack",
 		"pack_it_up:enderpack",
-		"pack_it_up:toolpack"
+		"pack_it_up:toolpack",
+		"pack_it_up:golden_armorpack",
+		"pack_it_up:netherite_armorpack"
 	]
 }

@@ -1,5 +1,7 @@
 {
   "emi.category.pack_it_up.pack_bench": "Pack Bench",
+  "key.pack_it_up.backpack_key": "Open Backpack",
+  "pack_it_up.name": "Pack It Up!",
   "itemGroup.pack_it_up.piu_group": "Pack It Up!",
   "pack_it_up.recipes": "Pack It Up! Recipes",
   "pack_it_up.pack_bench_handler": "Upgrade Backpack",

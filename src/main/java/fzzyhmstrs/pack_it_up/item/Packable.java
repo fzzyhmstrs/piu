@@ -1,7 +1,10 @@
 package fzzyhmstrs.pack_it_up.item;
 
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.Hand;
 
 public interface Packable {
 
@@ -32,4 +35,8 @@ public interface Packable {
         NbtCompound packInv = nbt.getCompound(INVENTORY);
         return PackInventory.fromNbt(slots, packInv);
     }
+
+    void openPackScreenHandler(PlayerEntity user, ItemStack stack);
+
+    void openPackScreenHandler(PlayerEntity user, PackItem.ModuleTier tier, PackItem.StackPredicate stackPredicate, ItemStack stack);
 }

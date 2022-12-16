@@ -4,6 +4,7 @@
 		"pack_it_up:backpack",
 		"pack_it_up:plantpack",
 		"pack_it_up:lunchpack",
+		"pack_it_up:iron_armorpack",
 		"pack_it_up:large_backpack"
 	]
 }
