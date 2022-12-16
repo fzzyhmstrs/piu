@@ -16,16 +16,16 @@ import org.jetbrains.annotations.Nullable;
 
 public class PackScreenHandlerFactory implements ExtendedScreenHandlerFactory {
 
-    public PackScreenHandlerFactory(Inventory inventory, PackItem.ModuleTier tier, ItemStack stack, Hand hand){
+    public PackScreenHandlerFactory(Inventory inventory, PackItem.ModuleTier tier, ItemStack stack, int index){
         this.inventory = inventory;
         this.tier = tier;
-        this.hand = hand.name();
+        this.index = index;
         this.stack = stack;
     }
 
     private final Inventory inventory;
     private final PackItem.ModuleTier tier;
-    private final String hand;
+    private final int index;
     private final ItemStack stack;
 
     @Override
@@ -36,7 +36,7 @@ public class PackScreenHandlerFactory implements ExtendedScreenHandlerFactory {
             ((PackInventory)inventory).stackPredicate.toBuf(buf);
         }
         buf.writeByte(tier.height);
-        buf.writeString(hand);
+        buf.writeByte(index);
     }
 
     @Override

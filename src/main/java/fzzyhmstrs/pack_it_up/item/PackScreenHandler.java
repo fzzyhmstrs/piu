@@ -45,7 +45,7 @@ public class PackScreenHandler extends ScreenHandler {
             syncId,
             playerInventory,buf.readByte() == PackItem.ModuleTier.ENDER.id ? playerInventory.player.getEnderChestInventory() : new PackInventory(buf.readByte(), PackItem.StackPredicate.fromBuf(buf)),
             buf.readByte(),
-            Objects.equals(buf.readString(), Hand.MAIN_HAND.name()) ? playerInventory.player.getStackInHand(Hand.MAIN_HAND) : playerInventory.player.getStackInHand(Hand.OFF_HAND),
+            playerInventory.getStack(buf.readByte()),
             ScreenHandlerContext.EMPTY
         );
     }

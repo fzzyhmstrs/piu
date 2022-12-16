@@ -1,6 +1,7 @@
 package fzzyhmstrs.pack_it_up.registry;
 
 import fzzyhmstrs.pack_it_up.PIU;
+import fzzyhmstrs.pack_it_up.item.ArmoredPackItem;
 import fzzyhmstrs.pack_it_up.item.BagItem;
 import fzzyhmstrs.pack_it_up.item.FrameItem;
 import fzzyhmstrs.pack_it_up.item.PackItem;
@@ -35,6 +36,9 @@ public class RegisterItem {
     public static final Item MAGICPACK_BAG = register("magicpack_bag",new BagItem(new Item.Settings().maxCount(1)));
     public static final Item LUNCHPACK_BAG = register("lunchpack_bag",new BagItem(new Item.Settings().maxCount(1)));
     public static final Item ENDERPACK_BAG = register("enderpack_bag",new BagItem(new Item.Settings().maxCount(1)));
+    public static final Item IRON_ARMORPACK_BAG = register("iron_armorpack_bag",new BagItem(new Item.Settings().maxCount(1)));
+    public static final Item GOLDEN_ARMORPACK_BAG = register("golden_armorpack_bag",new BagItem(new Item.Settings().maxCount(1)));
+    public static final Item NETHERITE_ARMORPACK_BAG = register("netherite_armorpack_bag",new BagItem(new Item.Settings().maxCount(1)));
 
     public static final Item BACKPACK = register("backpack",new PackItem(new Item.Settings().maxCount(1).recipeRemainder(BACKPACK_BAG), PackItem.ModuleTier.PACK, PackItem.StackPredicate.ANY));
     public static final Item LARGE_BACKPACK = register("large_backpack",new PackItem(new Item.Settings().maxCount(1).recipeRemainder(LARGE_BACKPACK_BAG), PackItem.ModuleTier.BIG_PACK, PackItem.StackPredicate.ANY));
@@ -46,6 +50,9 @@ public class RegisterItem {
     public static final Item MAGICPACK = register("magicpack",new PackItem(new Item.Settings().maxCount(1).recipeRemainder(MAGICPACK_BAG), PackItem.ModuleTier.SPECIAL, PackItem.StackPredicate.MAGIC));
     public static final Item LUNCHPACK = register("lunchpack",new PackItem(new Item.Settings().maxCount(1).recipeRemainder(LUNCHPACK_BAG), PackItem.ModuleTier.SPECIAL, PackItem.StackPredicate.FOOD));
     public static final Item ENDERPACK = register("enderpack",new PackItem(new Item.Settings().maxCount(1).recipeRemainder(ENDERPACK_BAG), PackItem.ModuleTier.ENDER, PackItem.StackPredicate.BLOCK));
+    public static final Item IRON_ARMORPACK = register("iron_armorpack",new ArmoredPackItem(ArmoredPackItem.Materials.IRON,new Item.Settings().maxCount(1).recipeRemainder(IRON_ARMORPACK_BAG), PackItem.ModuleTier.PACK, PackItem.StackPredicate.ANY));
+    public static final Item GOLDEN_ARMORPACK = register("golden_armorpack",new ArmoredPackItem(ArmoredPackItem.Materials.GOLD,new Item.Settings().maxCount(1).recipeRemainder(GOLDEN_ARMORPACK_BAG), PackItem.ModuleTier.SPECIAL, PackItem.StackPredicate.ANY));
+    public static final Item NETHERITE_ARMORPACK = register("netherite_armorpack",new ArmoredPackItem(ArmoredPackItem.Materials.NETHERITE,new Item.Settings().maxCount(1).recipeRemainder(NETHERITE_ARMORPACK_BAG), PackItem.ModuleTier.BIG_PACK, PackItem.StackPredicate.ANY));
 
     public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder(new Identifier(PIU.MOD_ID, "pack_group"))
             .displayName(Text.translatable("pack_it_up.name"))
@@ -60,6 +67,12 @@ public class RegisterItem {
                         new ItemStack(LARGE_BACKPACK_BAG),
                         new ItemStack(EXTREME_BACKPACK),
                         new ItemStack(EXTREME_BACKPACK_BAG),
+                        new ItemStack(IRON_ARMORPACK),
+                        new ItemStack(IRON_ARMORPACK_BAG),
+                        new ItemStack(GOLDEN_ARMORPACK),
+                        new ItemStack(GOLDEN_ARMORPACK_BAG),
+                        new ItemStack(NETHERITE_ARMORPACK),
+                        new ItemStack(NETHERITE_ARMORPACK_BAG),
                         new ItemStack(LUNCHPACK),
                         new ItemStack(LUNCHPACK_BAG),
                         new ItemStack(PLANTPACK),
