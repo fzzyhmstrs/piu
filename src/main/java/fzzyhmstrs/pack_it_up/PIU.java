@@ -72,6 +72,6 @@ public class PIU implements ModInitializer {
                     }
                 }
             }
-        }));
+        });
     }
 }
