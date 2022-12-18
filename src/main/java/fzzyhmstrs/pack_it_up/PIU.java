@@ -55,7 +55,6 @@ public class PIU implements ModInitializer {
     public void onInitialize() {
         RegisterItem.init();
         RegisterBlock.init();
-        Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(MOD_ID, PackBenchRecipe.ID), new PackBenchRecipeSerializer());
         ServerPlayNetworking.registerGlobalReceiver(OPEN_BACKPACK,(server,player,handler,buf,responseSender)-> server.execute(() -> {
             if (player.currentScreenHandler == player.playerScreenHandler){
                 PlayerInventory inventory = player.getInventory();
