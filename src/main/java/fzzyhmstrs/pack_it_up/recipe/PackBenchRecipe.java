@@ -1,5 +1,6 @@
 package fzzyhmstrs.pack_it_up.recipe;
 
+import fzzyhmstrs.pack_it_up.PIU;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -67,7 +68,7 @@ public class PackBenchRecipe implements Recipe<Inventory> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return new PackBenchRecipeSerializer();
+        return PIU.PACK_BENCH_RECIPE_SERIALIZER;
     }
 
     @Override
