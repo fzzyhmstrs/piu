@@ -20,6 +20,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -48,6 +49,7 @@ public class PIU implements ModInitializer {
 
 
     public static RecipeType<PackBenchRecipe> PACK_BENCH_RECIPE = Registry.register(Registries.RECIPE_TYPE, new Identifier(MOD_ID, PackBenchRecipe.ID),PackBenchRecipe.TYPE);
+    public static RecipeSerializer<PackBenchRecipe> PACK_BENCH_RECIPE_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER,new Identifier(MOD_ID, PackBenchRecipe.ID),new PackBenchRecipeSerializer());
 
     @Override
     public void onInitialize() {
