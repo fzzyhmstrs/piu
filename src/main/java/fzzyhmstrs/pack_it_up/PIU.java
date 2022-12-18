@@ -20,6 +20,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Hand;
@@ -46,12 +47,13 @@ public class PIU implements ModInitializer {
 
 
     public static RecipeType<PackBenchRecipe> PACK_BENCH_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier(MOD_ID, PackBenchRecipe.ID),PackBenchRecipe.TYPE);
+    public static RecipeSerializer<PackBenchRecipe> PACK_BENCH_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER,new Identifier(MOD_ID, PackBenchRecipe.ID),new PackBenchRecipeSerializer());
 
     @Override
     public void onInitialize() {
         RegisterItem.init();
         RegisterBlock.init();
-        Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(MOD_ID, PackBenchRecipe.ID), new PackBenchRecipeSerializer());
+
         ServerPlayNetworking.registerGlobalReceiver(OPEN_BACKPACK,(server,player,handler,buf,responseSender)-> {
             if (player.currentScreenHandler == player.playerScreenHandler){
                 PlayerInventory inventory = player.getInventory();
