@@ -1,10 +1,12 @@
 package fzzyhmstrs.pack_it_up.item;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Hand;
+import net.minecraft.util.collection.DefaultedList;
 
 public interface Packable {
 
@@ -39,4 +41,14 @@ public interface Packable {
     void openPackScreenHandler(PlayerEntity user, ItemStack stack);
 
     void openPackScreenHandler(PlayerEntity user, PackItem.ModuleTier tier, PackItem.StackPredicate stackPredicate, ItemStack stack);
+
+    default int indexOf(PlayerInventory playerInventory, ItemStack stack) {
+        DefaultedList<ItemStack> main = playerInventory.main;
+        for (int i = 0; i < main.size(); ++i) {
+            ItemStack itemStack = main.get(i);
+            if (main.get(i).isEmpty() || !ItemStack.canCombine(stack, main.get(i))) continue;
+            return i;
+        }
+        return -1;
+    }
 }

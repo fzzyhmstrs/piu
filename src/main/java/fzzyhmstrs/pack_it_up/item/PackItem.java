@@ -75,7 +75,7 @@ public class PackItem extends Item implements Packable {
         } else {
             inventory = Packable.getInventory(stack, tier.slots, stackPredicate);
         }
-        int index = user.getInventory().indexOf(stack);
+        int index = indexOf(user.getInventory(), stack);
         if (index != -1) {
             user.openHandledScreen(new PackScreenHandlerFactory(inventory, tier, stack, index));
         }
