@@ -38,6 +38,7 @@ public class PackScreenHandlerFactory implements ExtendedScreenHandlerFactory {
         buf.writeByte(tier.height);
         buf.writeByte(index);
         buf.writeByte(index);
+        buf.writeByte(index);
     }
 
     @Override
@@ -48,6 +49,6 @@ public class PackScreenHandlerFactory implements ExtendedScreenHandlerFactory {
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new PackScreenHandler(syncId,inv,inventory,tier.height,stack, ScreenHandlerContext.create(player.world, BlockPos.ORIGIN));
+        return new PackScreenHandler(syncId,inv,inventory,tier.height,stack,index, ScreenHandlerContext.create(player.world, BlockPos.ORIGIN));
     }
 }
