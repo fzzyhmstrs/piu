@@ -5,6 +5,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
@@ -28,16 +29,21 @@ public class PackScreenHandler extends ScreenHandler {
         int k;
         for (j = 0; j < this.rows; ++j) {
             for (k = 0; k < 9; ++k) {
-                this.addSlot(new PackSlot(inventory, k + j * 9, 8 + k * 18, 18 + j * 18));
+                this.addSlot(new PackSlot(inventory,this.stack, k + j * 9, 8 + k * 18, 18 + j * 18));
             }
+        }
+        boolean isEnder = false;
+        if (stack.getItem() instanceof PackItem packItem){
+            isEnder = packItem.getTier() == PackItem.ModuleTier.ENDER;
         }
         for (j = 0; j < 3; ++j) {
             for (k = 0; k < 9; ++k) {
-                this.addSlot(new PackLockedSlot(playerInventory,stack, k + j * 9 + 9, 8 + k * 18, 103 + j * 18 + i));
+
+                this.addSlot(new PackLockedSlot(playerInventory,stack,isEnder, k + j * 9 + 9, 8 + k * 18, 103 + j * 18 + i));
             }
         }
         for (j = 0; j < 9; ++j) {
-            this.addSlot(new PackLockedSlot(playerInventory,stack, j, 8 + j * 18, 161 + i));
+            this.addSlot(new PackLockedSlot(playerInventory,stack,isEnder, j, 8 + j * 18, 161 + i));
         }
     }
 
@@ -158,9 +164,12 @@ public class PackScreenHandler extends ScreenHandler {
 
     private static class PackSlot extends Slot{
 
-        public PackSlot(Inventory inventory, int index, int x, int y) {
+        public PackSlot(Inventory inventory,ItemStack packStack, int index, int x, int y) {
             super(inventory, index, x, y);
+            this.packstack = packStack;
         }
+
+        final ItemStack packstack;
 
         @Override
         public ItemStack takeStack(int amount) {
@@ -171,8 +180,10 @@ public class PackScreenHandler extends ScreenHandler {
         @Override
         public boolean canInsert(ItemStack stack) {
             if (inventory instanceof PackInventory packInventory) {
+                if (stack.getItem() instanceof Packable) return false;
                 return packInventory.canInsert(stack);
             } else {
+                if (packstack == stack) return false;
                 return super.canInsert(stack);
             }
         }
@@ -192,12 +203,14 @@ public class PackScreenHandler extends ScreenHandler {
 
     private static class PackLockedSlot extends Slot{
 
-        public PackLockedSlot(Inventory inventory,ItemStack packStack, int index, int x, int y) {
+        public PackLockedSlot(Inventory inventory,ItemStack packStack,boolean isEnder, int index, int x, int y) {
             super(inventory, index, x, y);
             this.packStack = packStack;
+            this.isEnder = isEnder;
         }
 
         private final ItemStack packStack;
+        private final boolean isEnder;
 
         @Override
         public boolean canInsert(ItemStack stack) {
@@ -210,6 +223,14 @@ public class PackScreenHandler extends ScreenHandler {
         }
 
         private boolean stackMovementIsAllowed(ItemStack stack) {
+            if (isEnder){
+                Item item = stack.getItem();
+                if (item instanceof PackItem packItem){
+                    return packItem.getTier() != PackItem.ModuleTier.ENDER;
+                } else {
+                    return true;
+                }
+            }
             return !(stack.getItem() instanceof Packable) && stack != packStack;
         }
     }
