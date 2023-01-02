@@ -16,10 +16,11 @@ import java.util.Objects;
 
 public class PackScreenHandler extends ScreenHandler {
 
-    public PackScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, int height, ItemStack stack, ScreenHandlerContext context) {
+    public PackScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, int height, ItemStack stack, int index, ScreenHandlerContext context) {
         super(PIU.PACK_SCREEN_HANDLER, syncId);
         this.rows = height;
         this.stack = stack;
+        this.index = index;
         this.inventory = inventory;
         inventory.onOpen(playerInventory.player);
         int i = (this.rows - 4) * 18;
@@ -46,6 +47,7 @@ public class PackScreenHandler extends ScreenHandler {
             playerInventory,buf.readByte() == PackItem.ModuleTier.ENDER.id ? playerInventory.player.getEnderChestInventory() : new PackInventory(buf.readByte(), PackItem.StackPredicate.fromBuf(buf)),
             buf.readByte(),
             buf.readByte() >= 0 ? playerInventory.getStack(buf.readByte()) : playerInventory.armor.get(buf.readByte() * -1),
+            buf.readByte(),
             ScreenHandlerContext.EMPTY
         );
     }
@@ -53,6 +55,7 @@ public class PackScreenHandler extends ScreenHandler {
     public final int rows;
     private final ItemStack stack;
     private final Inventory inventory;
+    private final int index;
 
     @Override
     public void close(PlayerEntity player) {
@@ -144,7 +147,13 @@ public class PackScreenHandler extends ScreenHandler {
 
     @Override
     public boolean canUse(PlayerEntity player) {
-        return true;
+        ItemStack test;
+        if (index < 0){
+            test = player.getInventory().armor.get(index * -1);
+        } else {
+            test = player.getInventory().main.get(index);
+        }
+        return !test.isEmpty() && test.getItem() instanceof Packable;
     }
 
     private static class PackSlot extends Slot{
