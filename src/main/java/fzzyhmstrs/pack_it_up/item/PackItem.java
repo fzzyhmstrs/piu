@@ -32,6 +32,10 @@ public class PackItem extends Item implements Packable {
     private final ModuleTier tier;
     private final PackItem.StackPredicate stackPredicate;
 
+    public ModuleTier getTier(){
+        return tier;
+    }
+
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add(Text.translatable(stackPredicate.translationKey).formatted(Formatting.ITALIC));
