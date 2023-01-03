@@ -35,6 +35,7 @@ public class PIU implements ModInitializer {
     public static Identifier SOUND_BACKPACK = new Identifier(MOD_ID,"sound_backpack");
 
     public static TagKey<Item> PLANT_ITEMS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"plant_items"));
+    public static TagKey<Item> BACKPACK_BAGS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"backpack_bags"));
     public static TagKey<Item> BACKPACKS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"backpacks"));
     public static TagKey<Item> LARGE_BACKPACKS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"large_backpacks"));
     public static TagKey<Item> SMALL_BACKPACKS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"small_backpacks"));
