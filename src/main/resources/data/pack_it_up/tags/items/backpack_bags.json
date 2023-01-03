@@ -1,0 +1,18 @@
+{
+	"replace": false,
+	"values": [
+		"pack_it_up:backpack_bag",
+		"pack_it_up:plantpack_bag",
+		"pack_it_up:lunchpack_bag",
+		"pack_it_up:iron_armorpack_bag",
+		"pack_it_up:large_backpack_bag",
+		"pack_it_up:extreme_backpack_bag",
+		"pack_it_up:blockpack_bag",
+		"pack_it_up:orepack_bag",
+		"pack_it_up:magicpack_bag",
+		"pack_it_up:enderpack_bag",
+		"pack_it_up:toolpack_bag",
+		"pack_it_up:golden_armorpack_bag",
+		"pack_it_up:netherite_armorpack_bag"
+	]
+}
