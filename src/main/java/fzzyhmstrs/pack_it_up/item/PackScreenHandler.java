@@ -97,12 +97,12 @@ public class PackScreenHandler extends ScreenHandler {
         Slot slot;
         boolean bl = false;
         int i = startIndex;
-        int max = inventory.getMaxCountPerStack();
         if (fromLast) {
             i = endIndex - 1;
         }
         if (stack.isStackable()) {
             while (!stack.isEmpty() && (fromLast ? i >= startIndex : i < endIndex)) {
+                int max = this.slots.get(i).inventory.getMaxCountPerStack();
                 slot = this.slots.get(i);
                 itemStack = slot.getStack();
                 if (!itemStack.isEmpty() && ItemStack.canCombine(stack, itemStack)) {
