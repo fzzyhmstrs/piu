@@ -159,7 +159,8 @@ public class PackItem extends Item implements Packable {
         BIG_PACK(2,4,36),
         TOOL(3,7,63),
         ENDER(4,3,27),
-        NETHERITE(5,6,54);
+        NETHERITE(5,6,54),
+        CACTUS(1,3,27);
 
         public final int height;
         public final int slots;
