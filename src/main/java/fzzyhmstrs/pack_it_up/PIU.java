@@ -50,12 +50,12 @@ public class PIU implements ModInitializer {
     public static TagKey<Item> FOOD_ITEMS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"food_items"));
 
 
-    public static ScreenHandlerType<PackScreenHandler> PACK_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,new Identifier(MOD_ID,"pack"),new ExtendedScreenHandlerType<>(PackScreenHandler::new));
-    public static ScreenHandlerType<PackBenchScreenHandler> PACK_BENCH_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,new Identifier(MOD_ID,"pack_bench"),new ScreenHandlerType<>(PackBenchScreenHandler::new));
+    public static ScreenHandlerType<PackScreenHandler> PACK_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER,new Identifier(MOD_ID,"pack"),new ExtendedScreenHandlerType<>(PackScreenHandler::new));
+    public static ScreenHandlerType<PackBenchScreenHandler> PACK_BENCH_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER,new Identifier(MOD_ID,"pack_bench"),new ScreenHandlerType<>(PackBenchScreenHandler::new));
 
 
-    public static RecipeType<PackBenchRecipe> PACK_BENCH_RECIPE = Registry.register(Registries.RECIPE_TYPE, new Identifier(MOD_ID, PackBenchRecipe.ID),PackBenchRecipe.TYPE);
-    public static RecipeSerializer<PackBenchRecipe> PACK_BENCH_RECIPE_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER,new Identifier(MOD_ID, PackBenchRecipe.ID),new PackBenchRecipeSerializer());
+    public static RecipeType<PackBenchRecipe> PACK_BENCH_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier(MOD_ID, PackBenchRecipe.ID),PackBenchRecipe.TYPE);
+    public static RecipeSerializer<PackBenchRecipe> PACK_BENCH_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER,new Identifier(MOD_ID, PackBenchRecipe.ID),new PackBenchRecipeSerializer());
 
     @Override
     public void onInitialize() {
@@ -81,6 +81,6 @@ public class PIU implements ModInitializer {
                     }
                 }
             }
-        });
+        }));
     }
 }
