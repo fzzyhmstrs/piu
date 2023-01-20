@@ -6,6 +6,7 @@
   "pack_it_up.pack_bench_handler": "Upgrade Backpack",
   "pack_it_up.bag_item_tooltip": "Doesn't hold items. Attach to a frame to store stuff!",
   "pack_it_up.predicate.any": "Can hold any item",
+  "pack_it_up.predicate.cactus": "Voids held items on screen close",
   "pack_it_up.predicate.block": "Can only hold blocks",
   "pack_it_up.predicate.ore": "Can only hold ores and ore blocks",
   "pack_it_up.predicate.tool": "Can only hold tools and equipment",
@@ -25,6 +26,7 @@
   "item.pack_it_up.magicpack": "Magicpack",
   "item.pack_it_up.lunchpack": "Lunchpack",
   "item.pack_it_up.enderpack": "Enderpack",
+  "item.pack_it_up.cactuspack": "Cactuspack",
   "item.pack_it_up.iron_armorpack": "Iron Armorpack",
   "item.pack_it_up.golden_armorpack": "Golden Armorpack",
   "item.pack_it_up.netherite_armorpack": "Netherite Armorpack",
@@ -38,6 +40,7 @@
   "item.pack_it_up.magicpack_bag": "Magicpack Bag",
   "item.pack_it_up.lunchpack_bag": "Lunchpack Bag",
   "item.pack_it_up.enderpack_bag": "Enderpack Bag",
+  "item.pack_it_up.cactuspack_bag": "Cactuspack Bag",
   "item.pack_it_up.iron_armorpack_bag": "Iron Armorpack Bag",
   "item.pack_it_up.golden_armorpack_bag": "Golden Armorpack Bag",
   "item.pack_it_up.netherite_armorpack_bag": "Netherite Armorpack Bag"
