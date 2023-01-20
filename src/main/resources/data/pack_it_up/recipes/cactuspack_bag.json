@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"CSC",
+		"SHS",
+		"CSC"
+	],
+	"key": {
+		"S": {
+			"tag": "minecraft:sand"
+		},
+		"C": {
+			"item": "minecraft:cactus"
+		},
+		"H": {
+			"item": "pack_it_up:backpack_bag"
+		}
+	},
+	"result": {
+		"item": "pack_it_up:cactuspack_bag"
+	}
+}
