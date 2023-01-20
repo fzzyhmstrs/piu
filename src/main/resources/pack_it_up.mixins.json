@@ -5,6 +5,9 @@
   "client": [
     "HandledScreenMixin"
   ],
+  "mixins": [
+    "ScreenHandlerMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
