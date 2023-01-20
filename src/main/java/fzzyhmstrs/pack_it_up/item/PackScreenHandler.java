@@ -66,7 +66,9 @@ public class PackScreenHandler extends ScreenHandler {
     @Override
     public void close(PlayerEntity player) {
         if (this.inventory instanceof PackInventory && !player.world.isClient){
-            Packable.saveInventory(stack,(PackInventory) inventory);
+            if (!(stack.getItem() instanceof PackItem packItem && packItem.getTier() == PackItem.ModuleTier.CACTUS)){
+                Packable.saveInventory(stack,(PackInventory) inventory);
+            }
         }
         super.close(player);
         this.inventory.onClose(player);
