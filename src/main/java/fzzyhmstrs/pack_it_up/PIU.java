@@ -34,7 +34,6 @@ public class PIU implements ModInitializer {
     public static Identifier OPEN_BACKPACK = new Identifier(MOD_ID,"open_backpack");
     public static Identifier SOUND_BACKPACK = new Identifier(MOD_ID,"sound_backpack");
 
-    public static TagKey<Item> PLANT_ITEMS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"plant_items"));
     public static TagKey<Item> BACKPACK_BAGS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"backpack_bags"));
     public static TagKey<Item> BACKPACKS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"backpacks"));
     public static TagKey<Item> LARGE_BACKPACKS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"large_backpacks"));
@@ -43,19 +42,26 @@ public class PIU implements ModInitializer {
     public static TagKey<Item> SEEDS = TagKey.of(Registry.ITEM_KEY,new Identifier("c","seeds"));
     public static TagKey<Item> RAW_ORES = TagKey.of(Registry.ITEM_KEY,new Identifier("c","raw_ores"));
 
-    public static ScreenHandlerType<PackScreenHandler> PACK_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER,new Identifier(MOD_ID,"pack"),new ExtendedScreenHandlerType<>(PackScreenHandler::new));
-    public static ScreenHandlerType<PackBenchScreenHandler> PACK_BENCH_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER,new Identifier(MOD_ID,"pack_bench"),new ScreenHandlerType<>(PackBenchScreenHandler::new));
+    public static TagKey<Item> BLOCK_ITEMS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"block_items"));
+    public static TagKey<Item> ORE_ITEMS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"ore_items"));
+    public static TagKey<Item> PLANT_ITEMS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"plant_items"));
+    public static TagKey<Item> TOOL_ITEMS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"tool_items"));
+    public static TagKey<Item> MAGIC_ITEMS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"magic_items"));
+    public static TagKey<Item> FOOD_ITEMS = TagKey.of(Registry.ITEM_KEY,new Identifier(MOD_ID,"food_items"));
 
 
-    public static RecipeType<PackBenchRecipe> PACK_BENCH_RECIPE = Registry.register(Registry.RECIPE_TYPE, new Identifier(MOD_ID, PackBenchRecipe.ID),PackBenchRecipe.TYPE);
-    public static RecipeSerializer<PackBenchRecipe> PACK_BENCH_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER,new Identifier(MOD_ID, PackBenchRecipe.ID),new PackBenchRecipeSerializer());
+    public static ScreenHandlerType<PackScreenHandler> PACK_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,new Identifier(MOD_ID,"pack"),new ExtendedScreenHandlerType<>(PackScreenHandler::new));
+    public static ScreenHandlerType<PackBenchScreenHandler> PACK_BENCH_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,new Identifier(MOD_ID,"pack_bench"),new ScreenHandlerType<>(PackBenchScreenHandler::new));
+
+
+    public static RecipeType<PackBenchRecipe> PACK_BENCH_RECIPE = Registry.register(Registries.RECIPE_TYPE, new Identifier(MOD_ID, PackBenchRecipe.ID),PackBenchRecipe.TYPE);
+    public static RecipeSerializer<PackBenchRecipe> PACK_BENCH_RECIPE_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER,new Identifier(MOD_ID, PackBenchRecipe.ID),new PackBenchRecipeSerializer());
 
     @Override
     public void onInitialize() {
         RegisterItem.init();
         RegisterBlock.init();
-
-        ServerPlayNetworking.registerGlobalReceiver(OPEN_BACKPACK,(server,player,handler,buf,responseSender)-> {
+        ServerPlayNetworking.registerGlobalReceiver(OPEN_BACKPACK,(server,player,handler,buf,responseSender)-> server.execute(() -> {
             if (player.currentScreenHandler == player.playerScreenHandler){
                 PlayerInventory inventory = player.getInventory();
                 ItemStack chest = inventory.armor.get(EquipmentSlot.CHEST.getEntitySlotId());
