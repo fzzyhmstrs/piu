@@ -88,19 +88,20 @@ public class PackItem extends Item implements Packable {
     public enum StackPredicate implements Predicate<ItemStack>{
         ANY(stack -> true,"pack_it_up.predicate.any"),
         SPECIAL(stack -> true,"pack_it_up.predicate.any"),
-        BLOCK(stack -> stack.getItem() instanceof BlockItem,"pack_it_up.predicate.block"),
-        FOOD(stack -> stack.isIn(ConventionalItemTags.FOODS),"pack_it_up.predicate.food"),
+        BLOCK(stack -> (stack.getItem() instanceof BlockItem || stack.isIn(PIU.BLOCK_ITEMS)),"pack_it_up.predicate.block"),
+        FOOD(stack -> (stack.isIn(ConventionalItemTags.FOODS) || stack.isIn(PIU.FOOD_ITEMS)),"pack_it_up.predicate.food"),
         PLANTS(stack-> stack.isIn(PIU.PLANT_ITEMS), "pack_it_up.predicate.plants"),
-        TOOL(ItemStack::isDamageable,"pack_it_up.predicate.tool"),
-        MAGIC(stack -> stack.getItem() instanceof EnchantedBookItem || stack.getItem() instanceof PotionItem || stack.getItem() instanceof TippedArrowItem,"pack_it_up.predicate.magic"),
+        TOOL(stack -> (stack.isDamagable() || stack.isIn(PIU.TOOL_ITEMS)),"pack_it_up.predicate.tool"),
+        MAGIC(stack -> (stack.getItem() instanceof EnchantedBookItem || stack.getItem() instanceof PotionItem || stack.getItem() instanceof TippedArrowItem || stack.isIn(PIU.MAGIC_ITEMS)),"pack_it_up.predicate.magic"),
         ORE(stack-> {
             boolean bl1 = stack.isIn(ConventionalItemTags.ORES);
             boolean bl2 = stack.isIn(PIU.GEMS);
             boolean bl3 = stack.isIn(PIU.RAW_ORES);
+            boolean bl4 = stack.isIn(PIU.ORE_ITEMS);
             if (stack.getItem() instanceof BlockItem blockItem){
-                return bl1 || bl2 || bl3 || blockItem.getBlock() instanceof ExperienceDroppingBlock;
+                return bl1 || bl2 || bl3 || bl4 || blockItem.getBlock() instanceof ExperienceDroppingBlock;
             } else {
-                return bl1 || bl2 || bl3;
+                return bl1 || bl2 || bl3 || bl4;
             }
         },"pack_it_up.predicate.ore");
 
