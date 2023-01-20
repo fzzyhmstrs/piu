@@ -87,11 +87,12 @@ public class PackItem extends Item implements Packable {
 
     public enum StackPredicate implements Predicate<ItemStack>{
         ANY(stack -> true,"pack_it_up.predicate.any"),
+        CACTUS(stack -> true,"pack_it_up.predicate.cactus"),
         SPECIAL(stack -> true,"pack_it_up.predicate.any"),
         BLOCK(stack -> (stack.getItem() instanceof BlockItem || stack.isIn(PIU.BLOCK_ITEMS)),"pack_it_up.predicate.block"),
         FOOD(stack -> (stack.isIn(ConventionalItemTags.FOODS) || stack.isIn(PIU.FOOD_ITEMS)),"pack_it_up.predicate.food"),
         PLANTS(stack-> stack.isIn(PIU.PLANT_ITEMS), "pack_it_up.predicate.plants"),
-        TOOL(stack -> (stack.isDamagable() || stack.isIn(PIU.TOOL_ITEMS)),"pack_it_up.predicate.tool"),
+        TOOL(stack -> (stack.isDamageable() || stack.isIn(PIU.TOOL_ITEMS)),"pack_it_up.predicate.tool"),
         MAGIC(stack -> (stack.getItem() instanceof EnchantedBookItem || stack.getItem() instanceof PotionItem || stack.getItem() instanceof TippedArrowItem || stack.isIn(PIU.MAGIC_ITEMS)),"pack_it_up.predicate.magic"),
         ORE(stack-> {
             boolean bl1 = stack.isIn(ConventionalItemTags.ORES);
