@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmithingRecipe;
@@ -26,7 +27,7 @@ import java.util.List;
 public class PackBenchScreenHandler extends ScreenHandler {
     public PackBenchScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
         super(PIU.PACK_BENCH_SCREEN_HANDLER, syncId);
-        this.world = playerInventory.player.world;
+        this.world = playerInventory.player.getWorld();
         this.recipes = this.world.getRecipeManager().listAllOfType(PIU.PACK_BENCH_RECIPE);
         this.context = context;
         this.player = playerInventory.player;
@@ -84,9 +85,15 @@ public class PackBenchScreenHandler extends ScreenHandler {
     }
 
     protected void onTakeOutput(PlayerEntity player, ItemStack stack) {
-        stack.onCraft(player.world, player, stack.getCount());
-        ItemStack remainder = new ItemStack(this.input.getStack(0).getItem().getRecipeRemainder());
-        this.output.unlockLastRecipe(player);
+        stack.onCraft(player.getWorld(), player, stack.getCount());
+        Item item = this.input.getStack(0).getItem().getRecipeRemainder();
+        ItemStack remainder;
+        if (item == null){
+            remainder = ItemStack.EMPTY;
+        } else {
+            remainder = new ItemStack(item);
+        }
+        this.output.unlockLastRecipe(player,List.of(input.getStack(0),input.getStack(1)));
         this.decrementStack(0);
         this.decrementStack(1);
         this.input.setStack(1, remainder);

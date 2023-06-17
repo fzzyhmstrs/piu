@@ -38,7 +38,7 @@ public class PackBenchBlock extends HorizontalFacingBlock {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         }
-        player.openHandledScreen(new SimpleNamedScreenHandlerFactory(((syncId, inv, player1) -> new PackBenchScreenHandler(syncId,inv, ScreenHandlerContext.create(player1.world, pos))), Text.translatable("pack_it_up.pack_bench_handler")));
+        player.openHandledScreen(new SimpleNamedScreenHandlerFactory(((syncId, inv, player1) -> new PackBenchScreenHandler(syncId,inv, ScreenHandlerContext.create(player1.getWorld(), pos))), Text.translatable("pack_it_up.pack_bench_handler")));
         return ActionResult.CONSUME;
     }
 

@@ -2,11 +2,9 @@ package fzzyhmstrs.pack_it_up.item;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import fzzyhmstrs.pack_it_up.PIU;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -25,21 +23,19 @@ public class PackScreen extends HandledScreen<PackScreenHandler> {
     private final int rows;
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        this.renderBackground(matrices);
-        super.render(matrices, mouseX, mouseY, delta);
-        this.drawMouseoverTooltip(matrices, mouseX, mouseY);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderBackground(context);
+        super.render(context, mouseX, mouseY, delta);
+        this.drawMouseoverTooltip(context, mouseX, mouseY);
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
+    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-        RenderSystem.setShaderTexture(0, TEXTURE);
         int i = (this.width - this.backgroundWidth) / 2;
         int j = (this.height - this.backgroundHeight) / 2;
-        drawTexture(matrices, i, j, 0, 0, this.backgroundWidth, this.rows * 18 + 17);
-        drawTexture(matrices, i, j + this.rows * 18 + 17, 0, 144, this.backgroundWidth, 96);
+        context.drawTexture(TEXTURE, i, j, 0, 0, this.backgroundWidth, this.rows * 18 + 17);
+        context.drawTexture(TEXTURE, i, j + this.rows * 18 + 17, 0, 144, this.backgroundWidth, 96);
     }
 
     @Override

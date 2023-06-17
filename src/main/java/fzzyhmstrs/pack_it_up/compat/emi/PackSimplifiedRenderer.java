@@ -1,10 +1,8 @@
 package fzzyhmstrs.pack_it_up.compat.emi;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import dev.emi.emi.api.render.EmiRenderable;
 import fzzyhmstrs.pack_it_up.PIU;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
 
 public class PackSimplifiedRenderer implements EmiRenderable {
@@ -15,8 +13,7 @@ public class PackSimplifiedRenderer implements EmiRenderable {
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, float delta) {
-        RenderSystem.setShaderTexture(0, SPRITE_SHEET);
-        DrawableHelper.drawTexture(matrices, x, y, 0, 0, 16, 16, 16, 16);
+    public void render(DrawContext matrices, int x, int y, float delta) {
+        matrices.drawTexture(SPRITE_SHEET, x, y, 0, 0, 16, 16, 16, 16);
     }
 }

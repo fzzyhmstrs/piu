@@ -56,10 +56,10 @@ public class RegisterItem {
     public static final Item GOLDEN_ARMORPACK = register("golden_armorpack",new ArmoredPackItem(ArmoredPackItem.Materials.GOLD,new Item.Settings().maxCount(1).recipeRemainder(GOLDEN_ARMORPACK_BAG), PackItem.ModuleTier.SPECIAL, PackItem.StackPredicate.ANY));
     public static final Item NETHERITE_ARMORPACK = register("netherite_armorpack",new ArmoredPackItem(ArmoredPackItem.Materials.NETHERITE,new Item.Settings().maxCount(1).recipeRemainder(NETHERITE_ARMORPACK_BAG), PackItem.ModuleTier.BIG_PACK, PackItem.StackPredicate.ANY));
 
-    public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder(new Identifier(PIU.MOD_ID, "pack_group"))
+    public static final ItemGroup ITEM_GROUP = Registry.register(Registries.ITEM_GROUP,new Identifier(PIU.MOD_ID, "pack_group"), FabricItemGroup.builder()
             .displayName(Text.translatable("pack_it_up.name"))
             .icon(() -> new ItemStack(BACKPACK))
-            .entries((enabledFeatures, entries) -> {
+            .entries((enabledFeatures, entries) ->
                 entries.addAll(List.of(new ItemStack(CLOTH),
                         new ItemStack(FRAME),
                         new ItemStack(RegisterBlock.PACK_BENCH.asItem()),
@@ -90,9 +90,9 @@ public class RegisterItem {
                         new ItemStack(ENDERPACK),
                         new ItemStack(ENDERPACK_BAG),
                         new ItemStack(CACTUSPACK),
-                        new ItemStack(CACTUSPACK_BAG)));
-            })
-            .build();
+                        new ItemStack(CACTUSPACK_BAG)))
+            )
+            .build());
 
     private static Item register(String path, Item item){
         return Registry.register(Registries.ITEM,new Identifier(PIU.MOD_ID,path),item);
