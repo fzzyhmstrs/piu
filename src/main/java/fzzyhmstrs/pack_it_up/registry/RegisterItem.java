@@ -59,7 +59,7 @@ public class RegisterItem {
     public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder(new Identifier(PIU.MOD_ID, "pack_group"))
             .displayName(Text.translatable("pack_it_up.name"))
             .icon(() -> new ItemStack(BACKPACK))
-            .entries((enabledFeatures, entries, operatorEnabled) -> {
+            .entries((enabledFeatures, entries) -> {
                 entries.addAll(List.of(new ItemStack(CLOTH),
                         new ItemStack(FRAME),
                         new ItemStack(RegisterBlock.PACK_BENCH.asItem()),

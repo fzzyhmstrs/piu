@@ -64,7 +64,7 @@ public class PackBenchRecipeScreen extends Screen {
                 List<CraftingRecipe> list2 = manager.listAllOfType(RecipeType.CRAFTING);
                 for (CraftingRecipe cr : list2){
                     if (!cr.getId().getNamespace().equals(PIU.MOD_ID)) continue;
-                    craftingRecipes.add(new ItemEntry(cr.getOutput(),cr));
+                    craftingRecipes.add(new ItemEntry(cr.getOutput(client.world.getRegistryManager()),cr));
                 }
                 initialized = true;
             }

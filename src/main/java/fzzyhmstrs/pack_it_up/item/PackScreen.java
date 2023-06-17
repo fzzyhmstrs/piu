@@ -2,6 +2,7 @@ package fzzyhmstrs.pack_it_up.item;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import fzzyhmstrs.pack_it_up.PIU;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.sound.PositionedSoundInstance;
@@ -37,8 +38,8 @@ public class PackScreen extends HandledScreen<PackScreenHandler> {
         RenderSystem.setShaderTexture(0, TEXTURE);
         int i = (this.width - this.backgroundWidth) / 2;
         int j = (this.height - this.backgroundHeight) / 2;
-        this.drawTexture(matrices, i, j, 0, 0, this.backgroundWidth, this.rows * 18 + 17);
-        this.drawTexture(matrices, i, j + this.rows * 18 + 17, 0, 144, this.backgroundWidth, 96);
+        drawTexture(matrices, i, j, 0, 0, this.backgroundWidth, this.rows * 18 + 17);
+        drawTexture(matrices, i, j + this.rows * 18 + 17, 0, 144, this.backgroundWidth, 96);
     }
 
     @Override

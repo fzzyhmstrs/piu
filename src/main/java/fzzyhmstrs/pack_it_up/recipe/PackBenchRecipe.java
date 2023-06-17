@@ -8,6 +8,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
@@ -42,7 +43,7 @@ public class PackBenchRecipe implements Recipe<Inventory> {
     }
 
     @Override
-    public ItemStack craft(Inventory inventory) {
+    public ItemStack craft(Inventory inventory, DynamicRegistryManager manager) {
         ItemStack itemStack = this.result.copy();
         NbtCompound nbtCompound = inventory.getStack(0).getNbt();
         if (nbtCompound != null) {
@@ -56,8 +57,12 @@ public class PackBenchRecipe implements Recipe<Inventory> {
         return width * height >= 2;
     }
 
+    public ItemStack getOutput(){
+        return result.copy();
+    }
+
     @Override
-    public ItemStack getOutput() {
+    public ItemStack getOutput(DynamicRegistryManager manager) {
         return result.copy();
     }
 

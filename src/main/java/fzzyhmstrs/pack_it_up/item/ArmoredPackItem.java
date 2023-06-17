@@ -27,7 +27,7 @@ import java.util.List;
 public class ArmoredPackItem extends ArmorItem implements Packable {
 
     public ArmoredPackItem(ArmorMaterial material, Settings settings, PackItem.ModuleTier tier, PackItem.StackPredicate stackPredicate) {
-        super(material, EquipmentSlot.CHEST, settings);
+        super(material, Type.CHESTPLATE, settings);
         this.tier = tier;
         this.stackPredicate = stackPredicate;
     }
@@ -113,12 +113,12 @@ public class ArmoredPackItem extends ArmorItem implements Packable {
         private final float toughness;
 
         @Override
-        public int getDurability(EquipmentSlot slot) {
+        public int getDurability(Type type) {
             return 100;
         }
 
         @Override
-        public int getProtectionAmount(EquipmentSlot slot) {
+        public int getProtection(Type type) {
             return protection;
         }
 
