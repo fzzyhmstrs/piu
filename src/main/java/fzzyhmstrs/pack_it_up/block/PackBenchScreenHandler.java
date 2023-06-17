@@ -18,6 +18,7 @@ import net.minecraft.screen.slot.ForgingSlotsManager;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -27,13 +28,12 @@ public class PackBenchScreenHandler extends ScreenHandler {
         super(PIU.PACK_BENCH_SCREEN_HANDLER, syncId);
         this.world = playerInventory.player.world;
         this.recipes = this.world.getRecipeManager().listAllOfType(PIU.PACK_BENCH_RECIPE);
-        this.input = new SimpleInventory(2);
         this.context = context;
         this.player = playerInventory.player;
         int i;
         this.addSlot(new Slot(this.input, 0, 27, 47));
         this.addSlot(new Slot(this.input, 1, 76, 47));
-        this.addSlot(new Slot(this.output, 2, 134, 47){
+        this.addSlot(new Slot(this.output, 0, 134, 47){
 
             @Override
             public boolean canInsert(ItemStack stack) {
@@ -67,7 +67,14 @@ public class PackBenchScreenHandler extends ScreenHandler {
     private final World world;
     private final List<PackBenchRecipe> recipes;
     private PackBenchRecipe currentRecipe;
-    protected final Inventory input;
+    protected final Inventory input = new SimpleInventory(2){
+
+        @Override
+        public void markDirty() {
+            super.markDirty();
+            PackBenchScreenHandler.this.onContentChanged(this);
+        }
+    };
     protected final CraftingResultInventory output = new CraftingResultInventory();
     protected final ScreenHandlerContext context;
     protected final PlayerEntity player;
@@ -91,21 +98,29 @@ public class PackBenchScreenHandler extends ScreenHandler {
 
     @Override
     public void onContentChanged(Inventory inventory) {
-        super.onContentChanged(inventory);
         if (inventory == this.input) {
             this.updateResult();
         }
+        super.onContentChanged(inventory);
+    }
+
+    @Override
+    public void onClosed(PlayerEntity player) {
+        super.onClosed(player);
+        this.context.run((world, pos) -> this.dropInventory(player, this.input));
+    }
+
+    @Override
+    public boolean canUse(PlayerEntity player) {
+        return this.context.get((world, pos) ->
+            player.squaredDistanceTo((double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5) <= 64.0
+        , true);
     }
 
     private void decrementStack(int slot) {
         ItemStack itemStack = this.input.getStack(slot);
         itemStack.decrement(1);
         this.input.setStack(slot, itemStack);
-    }
-
-    @Override
-    public boolean canUse(PlayerEntity player) {
-        return true;
     }
 
     public void updateResult() {
@@ -141,8 +156,7 @@ public class PackBenchScreenHandler extends ScreenHandler {
                     return ItemStack.EMPTY;
                 }
             } else if (slot >= 3 && slot < 39) {
-                int i;
-                int n = i = this.isUsableAsAddition(itemStack) ? 1 : 0;
+                int i = this.isUsableAsAddition(itemStack) ? 1 : 0;
                 if (!this.insertItem(itemStack2, i, 2, false)) {
                     return ItemStack.EMPTY;
                 }
